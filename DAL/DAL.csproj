@@ -82,6 +82,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AspNetRolesMeta.cs" />
+    <Compile Include="Models\AspNetUsersMeta.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Dock.cs" />
     <Compile Include="Models\Job.cs" />

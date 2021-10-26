@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using BusinessLogic;
 using DAL;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -148,40 +149,59 @@ namespace TestApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-       // [Authorize(Roles = "admin")]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+       [Authorize(Roles = "admin")]
+        public async Task<ActionResult> SaveUser(ApplicationUser model)
         {
-            //MainBLL mainBLL = new MainBLL();
-            //var role = mainBLL.GetRoles().FirstOrDefault(r => r.Id == model.RoleId);
-            //string jsonMessage;
-            //var user = new ApplicationUser
-            //{
-            //    FirstName = model.FirstName,
-            //    LastName = model.LastName,
-            //    DealerName = model.DealerName,
-            //    Email = model.Email,
-            //    UserName = model.Email,
-            //    isActive = model.isActive,
-            //};
+            MainBLL mainBLL = new MainBLL();
+            var role = mainBLL.GetRoles().FirstOrDefault(r => r.Id == model.Role);
+            string jsonMessage;
+            var user = new ApplicationUser
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                UserName = model.Email,
+                Address = model.Address,
+                City = model.City,
+                Country = model.Country,
+                Phone = model.Phone,
+                isActive = model.isActive,
+                Password = model.Password,
+                Role = model.Role
+            };
+        //          public string FirstName { get; set; }
+        //public string LastName { get; set; }
+        //public string Email { get; set; }
+        //public string Address { get; set; }
+        //public string City { get; set; }
+        //public string Country { get; set; }
+        //public string Phone { get; set; }
+        //public bool isActive { get; set; }
 
-            //var result = await UserManager.CreateAsync(user, model.Password);
+        //public string Role { get; set; }
 
-            //if (result.Succeeded)
-            //{
-            //    await UserManager.AddToRoleAsync(user.Id, role.Name);
-            //    jsonMessage = "User created successful!";
-            //    return Json(jsonMessage, JsonRequestBehavior.AllowGet);
-            //}
-            //AddErrors(result);
-            //jsonMessage = result.Errors.FirstOrDefault(x => x.Contains("Email"));
-            //return Json(jsonMessage, JsonRequestBehavior.AllowGet);
+
+        var result = await UserManager.CreateAsync(user, model.Password);
+
+            if (result.Succeeded)
+            {
+                await UserManager.AddToRoleAsync(user.Id, role.Name);
+                jsonMessage = "User created successful!";
+                return Json(jsonMessage, JsonRequestBehavior.AllowGet);
+            }
+            AddErrors(result);
+            jsonMessage = result.Errors.FirstOrDefault(x => x.Contains("Email"));
+            
+            return Json(jsonMessage, JsonRequestBehavior.AllowGet);
+        
+            
             //if (ModelState.IsValid)
             //{
             //    var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
             //    var result = await UserManager.CreateAsync(user, model.Password);
             //    if (result.Succeeded)
             //    {
-            //        await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+            //        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
             //        // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
             //        // Send an email with this link

@@ -20,6 +20,11 @@ namespace DAL
         public string Country { get; set; }
         public string Phone { get; set; }
         public bool isActive { get; set; }
+        public string Password { get; set; }
+        public string Role { get; set; }
+
+ 
+
 
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
@@ -54,11 +59,11 @@ namespace DAL
             return new ApplicationDbContext();
         }
 
-        public virtual DbSet<TransportStatus> TransportStatuses { get; set; }
-        public virtual DbSet<Customer> Customers { get; set; }
-        public virtual DbSet<Location> Locations { get; set; }
-        public virtual DbSet<Dock> Docks { get; set; }
-        public virtual DbSet<Job> Jobs{ get; set; }
+        public virtual DbSet<TransportStatus> TransportStatus { get; set; }
+        public virtual DbSet<Customer> Customer { get; set; }
+        public virtual DbSet<Location> Location { get; set; }
+        public virtual DbSet<Dock> Dock { get; set; }
+        public virtual DbSet<Job> Job { get; set; }
 
     }
 }
