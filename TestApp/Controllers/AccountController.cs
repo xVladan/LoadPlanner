@@ -148,33 +148,33 @@ namespace TestApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
+       // [Authorize(Roles = "admin")]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            MainBLL mainBLL = new MainBLL();
-            var role = mainBLL.GetRoles().FirstOrDefault(r => r.Id == model.RoleId);
-            string jsonMessage;
-            var user = new ApplicationUser
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                DealerName = model.DealerName,
-                Email = model.Email,
-                UserName = model.Email,
-                isActive = model.isActive,
-            };
+            //MainBLL mainBLL = new MainBLL();
+            //var role = mainBLL.GetRoles().FirstOrDefault(r => r.Id == model.RoleId);
+            //string jsonMessage;
+            //var user = new ApplicationUser
+            //{
+            //    FirstName = model.FirstName,
+            //    LastName = model.LastName,
+            //    DealerName = model.DealerName,
+            //    Email = model.Email,
+            //    UserName = model.Email,
+            //    isActive = model.isActive,
+            //};
 
-            var result = await UserManager.CreateAsync(user, model.Password);
+            //var result = await UserManager.CreateAsync(user, model.Password);
 
-            if (result.Succeeded)
-            {
-                await UserManager.AddToRoleAsync(user.Id, role.Name);
-                jsonMessage = "User created successful!";
-                return Json(jsonMessage, JsonRequestBehavior.AllowGet);
-            }
-            AddErrors(result);
-            jsonMessage = result.Errors.FirstOrDefault(x => x.Contains("Email"));
-            return Json(jsonMessage, JsonRequestBehavior.AllowGet);
+            //if (result.Succeeded)
+            //{
+            //    await UserManager.AddToRoleAsync(user.Id, role.Name);
+            //    jsonMessage = "User created successful!";
+            //    return Json(jsonMessage, JsonRequestBehavior.AllowGet);
+            //}
+            //AddErrors(result);
+            //jsonMessage = result.Errors.FirstOrDefault(x => x.Contains("Email"));
+            //return Json(jsonMessage, JsonRequestBehavior.AllowGet);
             //if (ModelState.IsValid)
             //{
             //    var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
