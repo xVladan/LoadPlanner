@@ -11,8 +11,10 @@ namespace DAL
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Email { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
@@ -43,14 +45,8 @@ namespace DAL
             builder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             builder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             builder.Conventions.Remove<PluralizingTableNameConvention>();
-           
-
+          
             //builder.Entity<TenderStatus>().HasIndex(e => e.Type).IsUnique();
-            //builder.Entity<Manufacturer>().HasIndex(e => e.ManufacturerName).IsUnique();
-            //builder.Entity<Tender>().HasIndex(t => t.TenderNo).IsUnique();
-            //builder.Entity<StockInfo>().HasIndex(s => s.RegNo).IsUnique();
-            //builder.Entity<Location>().HasIndex(l => l.City).IsUnique();
-            //builder.Entity<Location>().HasIndex(l => l.ZipCode).IsUnique();
         }
 
         public static ApplicationDbContext Create()
