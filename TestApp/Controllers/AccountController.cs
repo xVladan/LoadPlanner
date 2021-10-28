@@ -68,7 +68,7 @@ namespace TestApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login(ApplicationUser model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -77,7 +77,7 @@ namespace TestApp.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.isActive , shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -85,7 +85,7 @@ namespace TestApp.Controllers
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, isActive = model.isActive });
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
@@ -146,44 +146,32 @@ namespace TestApp.Controllers
 
         //
         // POST: /Account/Register
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
        [Authorize(Roles = "admin")]
+        [HttpPost]
         public async Task<ActionResult> SaveUser(ApplicationUser model)
         {
             MainBLL mainBLL = new MainBLL();
-            var role = mainBLL.GetRoles().FirstOrDefault(r => r.Id == model.Role);
+           var role = mainBLL.GetRoles().FirstOrDefault(r => r.Id == model.Role);
             string jsonMessage;
             var user = new ApplicationUser
             {
                 FirstName = model.FirstName,
                 LastName = model.LastName,
+                UserName = model.FirstName + model.LastName,
                 Email = model.Email,
-                UserName = model.Email,
                 Address = model.Address,
                 City = model.City,
                 Country = model.Country,
+                //Password = model.Password,
                 Phone = model.Phone,
                 isActive = model.isActive,
-                Password = model.Password,
                 Role = model.Role
             };
-        //          public string FirstName { get; set; }
-        //public string LastName { get; set; }
-        //public string Email { get; set; }
-        //public string Address { get; set; }
-        //public string City { get; set; }
-        //public string Country { get; set; }
-        //public string Phone { get; set; }
-        //public bool isActive { get; set; }
-
-        //public string Role { get; set; }
-
-
         var result = await UserManager.CreateAsync(user, model.Password);
 
-            if (result.Succeeded)
+            if(result.Succeeded)
             {
                 await UserManager.AddToRoleAsync(user.Id, role.Name);
                 jsonMessage = "User created successful!";

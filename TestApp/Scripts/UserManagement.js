@@ -13,8 +13,6 @@ function getAllUsers() {
                 contentType: "application/json",
                 data: "{}",
                 success: (data) => {
-                    console.log("succ")
-                    console.log(data);
                     userPromis.resolve(data);
                 },
                 error: (data) => {
@@ -24,23 +22,30 @@ function getAllUsers() {
             return userPromis.promise();
         },
         insert: function (values) {
+            
             $.ajax({
                 url: "/Account/SaveUser",
                 type: "POST",
                 data: JSON.stringify({ model: values }),
                 contentType: 'application/json; charset=utf-8',
             });
+            console.log(values)
         },
         update: function (key, values) {
             const users = usersDataSource.items();
             let editedUser = users.find(user => user.Id === key);
+            console.log(editedUser);
             editedUser = {
                 ...editedUser,
                 FirstName: values.FirstName ? values.FirstName : editedUser.FirstName,
                 LastName: values.LastName ? values.LastName : editedUser.LastName,
-                DealerName: values.DealerName ? values.DealerName : editedUser.DealerName,
+                City: values.City ? values.City : editedUser.City,
+                Country: values.Country ? values.Country : editedUser.Country,
+                Address: values.Address ? values.Address : editedUser.Address,
                 Email: values.Email ? values.Email : editedUser.Email,
-                RoleId: values.RoleId ? values.RoleId : editedUser.RoleId,
+                Password: values.Password ? values.Password : editedUser.Password,
+                Phone: values.Phone ? values.Phone : editedUser.Phone,
+                Role: values.Role ? values.Role : editedUser.Role,
                 isActive: values.isActive ? values.isActive : editedUser.isActive
             }
             $.ajax({
@@ -49,6 +54,8 @@ function getAllUsers() {
                 data: JSON.stringify({ Id: key, editData: editedUser }),
                 contentType: 'application/json; charset=utf-8',
             });
+            console.log(editedUser);
+
         },
         remove: function (key) {
             $.ajax({
@@ -68,12 +75,13 @@ function getAllUsers() {
                 loadMode: "raw",
                 load: function () {
                     return $.ajax({
-                        url: "/User/RoleDropdown",
+                        url: "/UserManagement/RoleDropdown",
                         type: "GET",
                         data: "{}",
                         dataType: 'json',
                         contentType: 'application/json; charset=utf-8',
                         success: (data) => {
+                            console.log(data);
                             d.resolve(data);
                         },
                         error: (data) => {
@@ -121,6 +129,10 @@ function getAllUsers() {
                     },
                     {
                         dataField: "LastName",
+                        colSpan: 2,
+                    },
+                    {
+                        dataField: "Password",
                         colSpan: 2,
                     },
                     {
@@ -195,20 +207,32 @@ function getAllUsers() {
                 caption: "Email"
             },
             {
+                dataField: "Password",
+                caption: "Password",
+                visible: false,
+                allowEditing: {
+                    formItem: {
+                        visible: true
+                    }
+                }
+            },
+            {
                 dataField: "Phone",
             },
             {
-                dataField: "Role"
+                dataField: "Role",
+                lookup: {
+                    dataSource: rolesDropdownData(),
+                    valueExpr: "Id",
+                    displayExpr: "Name"
+                        }
             },
+             
             {
                 dataField: "isActive",
                 caption: "Is Active"
             },
-             {
-                    dataSource: rolesDropdownData(),
-                    valueExpr: "Id",
-                   displayExpr: "Name",
-                }
+             
             //},
             //{
             //    dataField: "RoleId",

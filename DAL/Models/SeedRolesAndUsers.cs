@@ -10,7 +10,7 @@ namespace DAL.Models
 {
     public class SeedRolesAndUsers
     {
-
+        ApplicationDbContext c = new ApplicationDbContext();
         public static void Seed(ApplicationDbContext context)
         {
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
@@ -29,6 +29,8 @@ namespace DAL.Models
             }
 
             // Add new user(admin) to database
+            
+       //   var k = c.Users.FirstOrDefault(x => x.Email == x.Email).ToString();
 
             string userEmail = "admin@admin.com";
             string userPassword = "Admin!123";

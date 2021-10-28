@@ -8,6 +8,11 @@ namespace DAL.Models
 {
     public class AspNetRolesMeta
     {
+
+
+
+
+
         public string Id { get; set; }
         public string Name { get; set; }
     }

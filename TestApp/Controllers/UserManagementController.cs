@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using DAL.Models;
 using BusinessLogic;
+using DAL;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace TestApp.Controllers
 {
@@ -44,6 +46,42 @@ namespace TestApp.Controllers
                 throw;
             }
         }
+        
+       
+        public JsonResult DeleteUser(string Id)
+        {
+            try
+            {
+                mainBLL.DeleteUserFromDb(Id);
+                return Json("success");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        
+        
+        [HttpPost]
+        public void EditUser(ApplicationUser editData)
+        {
+            try
+            {
+
+                ApplicationUserManager userManager = HttpContext.GetOwinContext().Get<ApplicationUserManager>();
+                ApplicationUser role = mainBLL.EditDbUser(editData);
+                userManager.AddToRoleAsync(editData.Id, role.Role);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
 
     }
 }
