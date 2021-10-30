@@ -65,14 +65,14 @@ namespace TestApp.Controllers
         
         
         [HttpPost]
-        public void EditUser(ApplicationUser editData)
+        public void EditUser(AspNetUsersMeta editData)
         {
             try
             {
 
                 ApplicationUserManager userManager = HttpContext.GetOwinContext().Get<ApplicationUserManager>();
-                ApplicationUser role = mainBLL.EditDbUser(editData);
-                userManager.AddToRoleAsync(editData.Id, role.Role);
+                var role = mainBLL.EditDbUser(editData);
+                userManager.AddToRoleAsync(editData.Id, role.Name);
             }
             catch (Exception)
             {

@@ -37,6 +37,7 @@ function getAllUsers() {
             console.log(editedUser);
             editedUser = {
                 ...editedUser,
+                Id: values.Id,
                 FirstName: values.FirstName ? values.FirstName : editedUser.FirstName,
                 LastName: values.LastName ? values.LastName : editedUser.LastName,
                 City: values.City ? values.City : editedUser.City,

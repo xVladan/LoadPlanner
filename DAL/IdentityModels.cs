@@ -15,20 +15,20 @@ namespace DAL
     public class ApplicationUser : IdentityUser
     {
        
-        public override string Id { get; set; }
+     //   public override string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public override string UserName { get; set; }
-        public override string Email { get; set; }
+        //public override string UserName { get; set; }
+      //  public override string Email { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
         public string Phone { get; set; }
         public bool isActive { get; set; }
 
-        [DataType(DataType.Password)]
-        public  string Password { get; set; }
-        public string Role { get; set; }
+        //[DataType(DataType.Password)]
+      //  public  string Password { get; set; }
+        //public string Role { get; set; }
 
         //[ForeignKey("Role")]
         //public virtual Roles Roles { get; set; }
