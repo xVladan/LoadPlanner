@@ -71,7 +71,6 @@ namespace DAL
 
         public virtual DbSet<TransportStatus> TransportStatus { get; set; }
         public virtual DbSet<Customer> Customer { get; set; }
-        public virtual DbSet<Location> Location { get; set; }
         public virtual DbSet<Dock> Dock { get; set; }
         public virtual DbSet<Job> Job { get; set; }
 

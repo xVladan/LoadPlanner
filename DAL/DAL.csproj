@@ -83,7 +83,6 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Dock.cs" />
     <Compile Include="Models\Job.cs" />
-    <Compile Include="Models\Location.cs" />
     <Compile Include="Models\SeedRolesAndUsers.cs" />
     <Compile Include="Models\TransportStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
