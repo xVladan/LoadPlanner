@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿using BusinessLogic;
+using DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,23 +11,57 @@ namespace TestApp.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+        private MainBLL mainBLL = new MainBLL();
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
+        public JsonResult GetJobs()
         {
-            ViewBag.Message = "Your application description page.";
+            try
+            {
+                var jobs = mainBLL.GetJobs();
+                return Json(jobs, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
 
-            return View();
+                throw;
+            }
         }
 
-        public ActionResult Contact()
+        public void AddJob(Job jobData)
         {
-            ViewBag.Message = "Your contact page.";
+            try
+            {
+                mainBLL.AddJob(jobData);
+            }
+            catch (Exception)
+            {
 
-            return View();
+                throw;
+            }
         }
+
+        public void EditJob(Job jobData)
+        {
+            try
+            {
+                mainBLL.EditJob(jobData);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public void DeleteJob(int Id)
+        {
+            mainBLL.DeleteJob(Id);
+        }
+
+
     }
 }

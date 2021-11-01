@@ -8,22 +8,21 @@ using System.Web.Mvc;
 
 namespace TestApp.Controllers
 {
-    public class CustomerController : Controller
+    public class DockController : Controller
     {
         private MainBLL mainBLL = new MainBLL();
-        // GET: Customer
+        // GET: Dock
         public ActionResult Index()
         {
             return View();
         }
 
-        public JsonResult GetCustomers()
+        public JsonResult GetDocks()
         {
             try
             {
-                var customerList = mainBLL.GetCustomers();
-                return Json(customerList, JsonRequestBehavior.AllowGet);
-
+                var dock = mainBLL.GetDocks();
+                return Json(dock, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
             {
@@ -32,12 +31,11 @@ namespace TestApp.Controllers
             }
         }
 
-        public void AddCustomer(Customer customerData )
+        public void AddDock(Dock dockData)
         {
             try
             {
-                mainBLL.AddCustomer(customerData);
-
+                mainBLL.AddDock(dockData);
             }
             catch (Exception)
             {
@@ -46,11 +44,11 @@ namespace TestApp.Controllers
             }
         }
 
-        public void EditCustomer(Customer customerData)
+        public void EditDock(Dock dockData)
         {
             try
             {
-                mainBLL.EditCustomer(customerData);
+                mainBLL.EditDock(dockData);
             }
             catch (Exception)
             {
@@ -59,11 +57,11 @@ namespace TestApp.Controllers
             }
         }
 
-        public void DeleteCustomer(int Id)
+        public void DeleteDock(int Id)
         {
             try
             {
-                mainBLL.DeleteCustomer(Id);
+                mainBLL.DeleteDock(Id);
             }
             catch (Exception)
             {
@@ -72,11 +70,11 @@ namespace TestApp.Controllers
             }
         }
 
-        public JsonResult CustomerDropdown()
+        public JsonResult DockDropdown()
         {
             try
             {
-                var dropdown = mainBLL.CustomerDropdown();
+                var dropdown = mainBLL.DockDropdown();
                 return Json(dropdown, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)

@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿using BusinessLogic.DTO;
+using DAL;
 using DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,8 @@ namespace BusinessLogic
             }
         }
 
+
+        /// Customer
         public List<Customer>GetCustomers()
         {
             try
@@ -116,6 +119,30 @@ namespace BusinessLogic
             }
         }
 
+        public List<GenericDropdown> CustomerDropdown()
+        {
+            try
+            {
+                using (db = new ApplicationDbContext())
+                {
+                    var dropList = db.Customer.Select(p => new GenericDropdown()
+                    {
+                        id = p.Id,
+                        text = p.FirstName + " " + p.LastName,
+                    }).OrderBy(x => x.id).ToList();
+
+                    return dropList;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
+        ///Transport Status
         public List<TransportStatus>GetStatus()
         {
             try
@@ -187,5 +214,204 @@ namespace BusinessLogic
                 throw;
             }
         }
+
+        public List<GenericDropdown> StatusDropdown()
+        {
+            try
+            {
+                using (db = new ApplicationDbContext())
+                {
+                    var dropList = db.TransportStatus.Select(p => new GenericDropdown()
+                    {
+                        id = p.Id,
+                        text = p.Status,
+                    }).OrderBy(x => x.id).ToList();
+
+                    return dropList;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        ///Dock
+        public List<Dock> GetDocks()
+        {
+            try
+            {
+                using (db = new ApplicationDbContext())
+                {
+                    var dock = db.Dock.ToList();
+                    return dock;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public void AddDock(Dock postData)
+        {
+            try
+            {
+                using (db = new ApplicationDbContext())
+                {
+                    db.Dock.Add(postData);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public void EditDock(Dock dockData)
+        {
+            try
+            {
+                using (db = new ApplicationDbContext())
+                {
+                    var dockId = db.Dock.FirstOrDefault(x => x.Id == dockData.Id);
+                    dockId.DockName = dockData.DockName;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public void DeleteDock(int Id)
+        {
+            try
+            {
+                using (db = new ApplicationDbContext())
+                {
+                    var deleteById = db.Dock.FirstOrDefault(x => x.Id == Id);
+                    db.Dock.Remove(deleteById);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<GenericDropdown> DockDropdown()
+        {
+            try
+            {
+                using (db = new ApplicationDbContext())
+                {
+                    var dropList = db.Dock.Select(p => new GenericDropdown()
+                    {
+                        id = p.Id,
+                        text = p.DockName,
+                    }).OrderBy(x => x.id).ToList();
+
+                    return dropList;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        ///Job
+        public List<Job>GetJobs()
+        {
+            try
+            {
+                using (db = new ApplicationDbContext())
+                {
+                    var jobs = db.Job
+                        //.Include("TransportStatusId")
+                        //.Include("CustomerId")
+                        //.Include("DockId")
+                        .ToList();
+                    return jobs;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public void AddJob(Job postData)
+        {
+            try
+            {
+                using (db = new ApplicationDbContext())
+                {
+                    db.Job.Add(postData);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public void EditJob(Job jobData)
+        {
+            try
+            {
+                using (db = new ApplicationDbContext())
+                {
+                    var jobId = db.Job.FirstOrDefault(x => x.Id == jobData.Id);
+                    jobId.LoadNo = jobData.LoadNo;
+                    jobId.TransportStatusId = jobData.TransportStatusId;
+                    jobId.CustomerId = jobData.CustomerId;
+                    jobId.DockId = jobData.DockId;
+                    jobId.NoOfPallets = jobData.NoOfPallets;
+                    jobId.LoadType = jobData.LoadType;
+                    jobId.ArrivalTime = jobData.ArrivalTime;
+                    jobId.DockOn = jobData.DockOn;
+                    jobId.DockOff = jobData.DockOff;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public void DeleteJob(int Id)
+        {
+            try
+            {
+                using (db = new ApplicationDbContext())
+                {
+                    var deleteById = db.Job.FirstOrDefault(x => x.Id == Id);
+                    db.Job.Remove(deleteById);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
     }
 }
