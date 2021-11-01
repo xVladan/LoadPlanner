@@ -5,14 +5,14 @@
 
 
 function insertDataIntoTable() {
-    var status = new DevExpress.data.DataSource({
+    var dock = new DevExpress.data.DataSource({
         key: 'Id',
         load: function () {
             var d = new $.Deferred();
 
             $.ajax({
                 type: "GET",
-                url: "/Status/GetStatus",
+                url: "/Dock/GetDocks",
                 contentType: "application/json; charset=utf-8",
                 data: "{}",
                 dataType: "json",
@@ -28,32 +28,31 @@ function insertDataIntoTable() {
         insert: function (values) {
             console.log(values);
             $.ajax({
-                url: "/Status/AddStatus",
+                url: "/Dock/AddDock",
                 type: "POST",
-                data: JSON.stringify({ statusData: values }),
+                data: JSON.stringify({ dockData: values }),
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
         },
         update: function (key, values) {
-            let statusArray = status.items();
-            let editedStatus = statusArray.find(item => item.Id === key)
-            editedStatus = {
-                ...editedStatus,
-                Status: values.Status ? values.Status : editedStatus.Status,
-                Description: values.Description ? values.Description : editedStatus.Description,
+            let dockArray = dock.items();
+            let editedDock = dockArray.find(item => item.Id === key)
+            editedDock = {
+                ...editedDock,
+                DockName: values.DockName ? values.DockName : editedDock.DockName,
             }
             $.ajax({
-                url: "/Status/EditStatus",
+                url: "/Dock/EditDock",
                 type: "POST",
-                data: JSON.stringify(editedStatus),
+                data: JSON.stringify(editedDock),
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
         },
         remove: function (key) {
             $.ajax({
-                url: "/Status/DeleteStatus",
+                url: "/Dock/DeleteDock",
                 type: "POST",
                 data: JSON.stringify({ Id: key }),
                 dataType: 'json',
@@ -63,7 +62,7 @@ function insertDataIntoTable() {
     });
 
     $("#dataGrid").dxDataGrid({
-        dataSource: status,
+        dataSource: dock,
         showBorders: true,
         paging: {
             pageSize: 10
@@ -81,7 +80,7 @@ function insertDataIntoTable() {
             allowDeleting: true,
             allowAdding: true,
             popup: {
-                title: "Status Info",
+                title: "Dock Info",
                 showTitle: true,
                 width: 700,
                 height: 525,
@@ -94,15 +93,7 @@ function insertDataIntoTable() {
                         colSpan: 2,
                         items: [
                             {
-                                dataField: "Status",
-                                colSpan: 2,
-                            },
-                            {
-                                dataField: "Color",
-                                colSpan: 2,
-                            },
-                            {
-                                dataField: "Description",
+                                dataField: "DockName",
                                 colSpan: 2,
                             },
                         ]
@@ -123,18 +114,11 @@ function insertDataIntoTable() {
                 }
             },
             {
-                dataField: "Status",
-                width: "15%",
-                dataType: "text",
-            },
-            {
-                dataField: "Description",
+                dataField: "DockName",
                 width: "15%",
                 dataType: "text",
             },
         ],
-
-            });
-
+    });
 
 }

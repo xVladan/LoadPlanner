@@ -70,6 +70,20 @@ namespace TestApp.Controllers
             }
         }
 
+        public JsonResult StatusDropdown()
+        {
+            try
+            {
+                var dropdown = mainBLL.StatusDropdown();
+                return Json(dropdown, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
     }
 
 }
