@@ -7,11 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 
-//using System.Data.Entity;
-//using System.Data.Entity.ModelConfiguration.Conventions;
-//using System.Security.Claims;
+//using System.Web;
+//using System.Web.Mvc;
+//using BusinessLogic;
+//using Microsoft.AspNet.Identity.Owin;
 //using Microsoft.AspNet.Identity;
-//using Microsoft.AspNet.Identity.EntityFramework;
+//using Microsoft.AspNetCore.Identity;
+
 
 
 namespace BusinessLogic
@@ -58,7 +60,7 @@ namespace BusinessLogic
 
                 foreach (var user in dbUsers)
                 {
-                  //  var tempId = user.Roles.FirstOrDefault(x => x.RoleId == x.UserId);
+                    //  var tempId = user.Roles.FirstOrDefault(x => x.RoleId == x.UserId);
                     var result = new AspNetUsersMeta
                     {
                         Id = user.Id,
@@ -70,14 +72,11 @@ namespace BusinessLogic
                         Country = user.Country,
                         Phone = user.Phone,
                         isActive = user.isActive,
-                        RoleId = user.Roles.FirstOrDefault(role => role.UserId == user.Id).RoleId
+                         RoleId = user.Roles.FirstOrDefault(role => role.UserId == user.Id).RoleId
+                       //oleId = user.Roles.FirstOrDefault(x => x.UserId == user.Id)
                         // RoleId = tempId.RoleId
 
                         //Role = user.Role
-                        // RoleId = user.Roles.FirstOrDefault(x=>x.RoleId== user.Roles(c=>))
-
-                        //  Role = user.Roles.FirstOrDefault(x=>x.RoleId ==  )
-                        // = user.Roles.Fir.stOrDefault(x => x.RoleId == tempId)
                     };
                     users.Add(result);
                 }
@@ -108,12 +107,13 @@ namespace BusinessLogic
             }
         }
 
-        public AspNetRolesMeta EditDbUser(AspNetUsersMeta user)
+  public  AspNetRolesMeta EditDbUser(AspNetUsersMeta user)
         {
             try
             {
                 using (db = new ApplicationDbContext())
                 {
+
                     var userById = db.Users.FirstOrDefault(x => x.Id == user.Id);
                     var roles = db.Roles.ToList();
                     var roleById = db.Roles
@@ -123,7 +123,7 @@ namespace BusinessLogic
                             Name = role.Name
                         })
                         .FirstOrDefault(role => role.Id == user.RoleId);
-                  
+
                     userById.Id = user.Id;
                     userById.FirstName = user.FirstName;
                     userById.LastName = user.LastName;
@@ -133,10 +133,19 @@ namespace BusinessLogic
                     userById.isActive = user.isActive;
              //       userById.Password = user.Password;
                     userById.City = user.City;
-               //     userById.Role = user.Role;
+                    //     userById.Role = user.Role;
+                    
+
+                  //db.Entry(user).State = EntityState.Detached;
+
 
                     db.SaveChanges();
-                   return roleById;
+
+                    //       db.SaveChanges();
+                       return roleById;
+
+                    //  db.Users.FirstOrDefault(x => x.Id == user.Id).Roles.FirstOrDefault(v => v.UserId == user.Id).RoleId = user.RoleId;
+
                 }
             }
             catch (Exception)

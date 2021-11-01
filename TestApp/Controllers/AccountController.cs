@@ -154,10 +154,11 @@ namespace TestApp.Controllers
         public async Task<ActionResult> SaveUser(RegisterViewModel model)
         {
             MainBLL mainBLL = new MainBLL();
-           var role = mainBLL.GetRoles().FirstOrDefault(r => r.Id == model.RoleId);
+            var role = mainBLL.GetRoles().FirstOrDefault(r => r.Id == model.RoleId);
             string jsonMessage;
             var user = new ApplicationUser
             {
+
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 UserName = model.Email,

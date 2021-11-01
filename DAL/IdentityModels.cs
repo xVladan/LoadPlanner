@@ -28,7 +28,7 @@ namespace DAL
 
         //[DataType(DataType.Password)]
       //  public  string Password { get; set; }
-        //public string Role { get; set; }
+     ////   public string RoleName { get; set; }
 
         //[ForeignKey("Role")]
         //public virtual Roles Roles { get; set; }

@@ -54,11 +54,13 @@
                 <div class="content-container  d-flex bg-dark pt-4 sidemenu" height="100%;">
                     <div class="pt-4 sidenav bg-dark">
                         <p class="">@Html.ActionLink("Home", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "text-decoration-none" }) </p>
-                        <p class=""> @Html.ActionLink("User Management", "Index", "UserManagement", routeValues: null, htmlAttributes: new { @class = "text-decoration-none" }) </p>
+                    
+                        @if(User.IsInRole("admin")) {
+                             <p class="">@Html.ActionLink("User Management", "Index", "UserManagement", routeValues: null, htmlAttributes: new { @class = "text-decoration-none" }) </p>
+                        }
                         <p class="navlink"> @Html.ActionLink("Customers", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "text-decoration-none" })  </p>
                         <p class="navlink">@Html.ActionLink("System Sections", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "text-decoration-none" }) </p>
                         <p class="navlink"> @Html.ActionLink("Docks", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "text-decoration-none" }) </p>
-                        <p class="navlink"> @Html.ActionLink("Location", "Index", "Location", routeValues: null, htmlAttributes: new { @class = "text-decoration-none" }) </p>
                     </div>
                         @{
                             if (HttpContext.Current.User.IsInRole("admin"))

@@ -36,8 +36,8 @@ function getAllUsers() {
             let editedUser = users.find(user => user.Id === key);
             console.log(editedUser);
             editedUser = {
-                ...editedUser,
-                Id: values.Id,
+               ...editedUser,
+                Id: key,
                 FirstName: values.FirstName ? values.FirstName : editedUser.FirstName,
                 LastName: values.LastName ? values.LastName : editedUser.LastName,
                 City: values.City ? values.City : editedUser.City,
@@ -46,7 +46,8 @@ function getAllUsers() {
                 Email: values.Email ? values.Email : editedUser.Email,
                 Password: values.Password ? values.Password : editedUser.Password,
                 Phone: values.Phone ? values.Phone : editedUser.Phone,
-                Role: values.Role ? values.Role : editedUser.Role,
+                Role: values.RoleId ? values.RoleId : editedUser.RoleId,
+                RoleId: values.RoleId ? values.RoleId : editedUser.RoleId,
                 isActive: values.isActive ? values.isActive : editedUser.isActive
             }
             $.ajax({
@@ -221,10 +222,17 @@ function getAllUsers() {
                 dataField: "Phone",
             },
             {
-                dataField: "Role",
+                dataField: "RoleId",
+                dataType: "string",
+                caption: "Role",
+                allowEditing: {
+                   formItem: {
+                        visible: true
+                    }
+                },
                 lookup: {
                     dataSource: rolesDropdownData(),
-                    valueExpr: "Id",
+                    valueExpr:"Id",
                     displayExpr: "Name"
                         }
             },

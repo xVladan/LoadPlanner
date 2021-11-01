@@ -7,6 +7,9 @@ using DAL.Models;
 using BusinessLogic;
 using DAL;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace TestApp.Controllers
 {
@@ -72,7 +75,12 @@ namespace TestApp.Controllers
 
                 ApplicationUserManager userManager = HttpContext.GetOwinContext().Get<ApplicationUserManager>();
                 var role = mainBLL.EditDbUser(editData);
-                userManager.AddToRoleAsync(editData.Id, role.Name);
+                  ApplicationDbContext db = new ApplicationDbContext();
+
+                IdentityUser user = userManager.FindById(editData.Id);        
+                var old = db.Roles.FirstOrDefault(x => x.Id != role.Id);
+                userManager.RemoveFromRole(editData.Id, old.Name);
+                userManager.AddToRole(editData.Id, role.Name);
             }
             catch (Exception)
             {
