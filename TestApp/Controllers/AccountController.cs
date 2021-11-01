@@ -5,7 +5,9 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using BusinessLogic;
 using DAL;
+using DAL.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -76,7 +78,7 @@ namespace TestApp.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe , shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -145,43 +147,51 @@ namespace TestApp.Controllers
 
         //
         // POST: /Account/Register
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+       [Authorize(Roles = "admin")]
         [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-       // [Authorize(Roles = "admin")]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> SaveUser(RegisterViewModel model)
         {
-            //MainBLL mainBLL = new MainBLL();
-            //var role = mainBLL.GetRoles().FirstOrDefault(r => r.Id == model.RoleId);
-            //string jsonMessage;
-            //var user = new ApplicationUser
-            //{
-            //    FirstName = model.FirstName,
-            //    LastName = model.LastName,
-            //    DealerName = model.DealerName,
-            //    Email = model.Email,
-            //    UserName = model.Email,
-            //    isActive = model.isActive,
-            //};
-
-            //var result = await UserManager.CreateAsync(user, model.Password);
-
-            //if (result.Succeeded)
-            //{
-            //    await UserManager.AddToRoleAsync(user.Id, role.Name);
-            //    jsonMessage = "User created successful!";
-            //    return Json(jsonMessage, JsonRequestBehavior.AllowGet);
-            //}
-            //AddErrors(result);
-            //jsonMessage = result.Errors.FirstOrDefault(x => x.Contains("Email"));
-            //return Json(jsonMessage, JsonRequestBehavior.AllowGet);
-            if (ModelState.IsValid)
+            MainBLL mainBLL = new MainBLL();
+            var role = mainBLL.GetRoles().FirstOrDefault(r => r.Id == model.RoleId);
+            string jsonMessage;
+            var user = new ApplicationUser
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                UserName = model.Email,
+                Email = model.Email,
+                Address = model.Address,
+                City = model.City,
+                Country = model.Country,
+                //Password = model.Password,
+                Phone = model.Phone,
+                isActive = model.isActive,
+               // Role = model.Role
+            };
+        var result = await UserManager.CreateAsync(user, model.Password);
+
+            if(result.Succeeded)
+            {
+                await UserManager.AddToRoleAsync(user.Id, role.Name);
+                jsonMessage = "User created successful!";
+                return Json(jsonMessage, JsonRequestBehavior.AllowGet);
+            }
+            AddErrors(result);
+            jsonMessage = result.Errors.FirstOrDefault(x => x.Contains("Email"));
+            
+            return Json(jsonMessage, JsonRequestBehavior.AllowGet);
+        
+            
+            //if (ModelState.IsValid)
+            //{
+            //    var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+            //    var result = await UserManager.CreateAsync(user, model.Password);
+            //    if (result.Succeeded)
+            //    {
+            //        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
