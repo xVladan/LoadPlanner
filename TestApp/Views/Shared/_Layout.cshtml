@@ -58,12 +58,12 @@
                         @if(User.IsInRole("admin")) {
                              <p class="">@Html.ActionLink("User Management", "Index", "UserManagement", routeValues: null, htmlAttributes: new { @class = "text-decoration-none" }) </p>
                         }
-                        <p class="navlink"> @Html.ActionLink("Customers", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "text-decoration-none" })  </p>
-                        <p class="navlink">@Html.ActionLink("System Sections", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "text-decoration-none" }) </p>
-                        <p class="navlink"> @Html.ActionLink("Docks", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "text-decoration-none" }) </p>
+                        <p class="navlink"> @Html.ActionLink("Customers", "Index", "Customer", routeValues: null, htmlAttributes: new { @class = "text-decoration-none" })  </p>
+                        <p class="navlink">@Html.ActionLink("Transport Status", "Index", "Status", routeValues: null, htmlAttributes: new { @class = "text-decoration-none" }) </p>
+                        <p class="navlink"> @Html.ActionLink("Docks", "Index", "Dock", routeValues: null, htmlAttributes: new { @class = "text-decoration-none" }) </p>
                     </div>
                         @{
-                            if (HttpContext.Current.User.IsInRole("admin"))
+                            @*if (HttpContext.Current.User.IsInRole("admin"))
                             {
                                 <div class="accordion d-none" id="navLinksAccordion">
                                     <div class="accordion-item bg-dark border-0 navlink">
@@ -108,7 +108,7 @@
                                         @Html.ActionLink("Home", "Index", "Home")
                                     </p>
                                 </div>
-                            }
+                            }*@
                         }
                  
 
