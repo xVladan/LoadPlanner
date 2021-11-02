@@ -332,7 +332,7 @@ namespace BusinessLogic
         }
 
         ///Job
-        public List<Job>GetJobs()
+        public List<Job> GetJobs()
         {
             try
             {
