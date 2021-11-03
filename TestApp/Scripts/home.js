@@ -114,13 +114,13 @@ function insertDataIntoTable() {
         return lookupStatusSource;
     };
 
-
+    
    
     function getJobsData() {
         let d = new $.Deferred();
         const lookupStatusSource = {
             store: new DevExpress.data.CustomStore({
-                key: "Id",
+                key: "id",
                 loadMode: "raw",
                 load: function () {
                     return $.ajax({
@@ -134,6 +134,7 @@ function insertDataIntoTable() {
                             d.resolve(data);
                         },
                         error: (data) => {
+                            console.log("werr");
                             d.reject(data);
                         }
                     });
@@ -153,7 +154,7 @@ function insertDataIntoTable() {
 
     $('#scheduler').dxScheduler({
         timeZone: 'Europe/Berlin',
-        dataSource: appointment,
+        dataSource: getJobsData(),
         textExpr: "title",
         views: [{
             type: "day",
