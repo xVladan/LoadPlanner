@@ -114,7 +114,7 @@ function insertDataIntoTable() {
         return lookupStatusSource;
     };
 
-    
+    //
    
     function getJobsData() {
         let d = new $.Deferred();
