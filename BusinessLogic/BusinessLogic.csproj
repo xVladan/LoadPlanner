@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTO\GenericDropdown.cs" />
+    <Compile Include="DTO\JobDTO.cs" />
     <Compile Include="MainBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

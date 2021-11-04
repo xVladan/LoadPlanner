@@ -332,23 +332,59 @@ namespace BusinessLogic
         }
 
         ///Job
-        public List<Job> GetJobs()
+        //public List<Job> GetJobs()
+        //{
+        //    try
+        //    {
+        //        using (db = new ApplicationDbContext())
+        //        {
+        //            var jobs = db.Job
+        //                .Include(x => x.Status)
+        //                .Include(x => x.Customer)
+        //                .Include(x => x.Dock)
+        //                .ToList();
+        //            return jobs;
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+
+        //        throw;
+        //    }
+        //}
+
+        public List<JobDTO> GetJobs()
         {
             try
             {
                 using (db = new ApplicationDbContext())
                 {
-                    var jobs = db.Job
-                        //.Include("TransportStatusId")
-                        //.Include("CustomerId")
-                        //.Include("DockId")
-                        .ToList();
+                    var dbJob = db.Job.ToList();
+                    List<JobDTO> jobs = new List<JobDTO>();
+
+                    foreach (var job in dbJob)
+                    {
+                        var result = new JobDTO
+                        {
+                            Id = job.Id,
+                            LoadNo = job.LoadNo,
+                            TransportStatusId = job.TransportStatusId,
+                            CustomerId = job.CustomerId,
+                            DockId = job.DockId,
+                            NoOfPallets = job.NoOfPallets,
+                            LoadType = job.LoadType,
+                            ArrivalTime = job.ArrivalTime.ToString(),
+                            startDate = job.startDate.ToString(),
+                            endDate = job.endDate.ToString(),
+
+                        };
+                        jobs.Add(result);
+                    }
                     return jobs;
                 }
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -384,8 +420,8 @@ namespace BusinessLogic
                     jobId.NoOfPallets = jobData.NoOfPallets;
                     jobId.LoadType = jobData.LoadType;
                     jobId.ArrivalTime = jobData.ArrivalTime;
-                    jobId.DockOn = jobData.DockOn;
-                    jobId.DockOff = jobData.DockOff;
+                    jobId.startDate = jobData.startDate;
+                    jobId.endDate = jobData.endDate;
                     db.SaveChanges();
                 }
             }
