@@ -40,11 +40,9 @@ namespace DAL.Models
         public DateTime ArrivalTime { get; set; }
 
         [DisplayName("Dock On")]
-        public DateTime DockOn { get; set; }
-
-        [DisplayName("Dock Of")]
-        public DateTime DockOff { get; set; }
         public DateTime startDate { get; set; }
+
+        [DisplayName("Dock Off")]
         public DateTime endDate { get; set; }
 
 
