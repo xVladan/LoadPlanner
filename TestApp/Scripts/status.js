@@ -42,6 +42,7 @@ function insertDataIntoTable() {
                 ...editedStatus,
                 Status: values.Status ? values.Status : editedStatus.Status,
                 Description: values.Description ? values.Description : editedStatus.Description,
+                Color: values.Color ? values.Color : editedStatus.Color
             }
             $.ajax({
                 url: "/Status/EditStatus",
@@ -124,14 +125,19 @@ function insertDataIntoTable() {
             },
             {
                 dataField: "Status",
-                width: "15%",
+                width: "25%",
+                dataType: "text",
+            },
+            {
+                dataField: "Color",
+                width: "25%",
                 dataType: "text",
             },
             {
                 dataField: "Description",
-                width: "15%",
+                width: "20%",
                 dataType: "text",
-            },
+            }
         ],
 
             });

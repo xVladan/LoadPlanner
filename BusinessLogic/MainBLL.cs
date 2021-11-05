@@ -188,6 +188,7 @@ namespace BusinessLogic
                     var statusId = db.TransportStatus.FirstOrDefault(x => x.Id == statusData.Id);
                     statusId.Status = statusData.Status;
                     statusId.Description = statusData.Description;
+                    statusId.Color = statusData.Color;
                     db.SaveChanges();
                 }
             }
@@ -359,7 +360,7 @@ namespace BusinessLogic
             {
                 using (db = new ApplicationDbContext())
                 {
-                    var dbJob = db.Job.ToList();
+                    var dbJob = db.Job.Include(x=>x.Status).ToList();
                     List<JobDTO> jobs = new List<JobDTO>();
 
                     foreach (var job in dbJob)
@@ -376,7 +377,8 @@ namespace BusinessLogic
                             ArrivalTime = job.ArrivalTime.ToString(),
                             startDate = job.startDate.ToString(),
                             endDate = job.endDate.ToString(),
-
+                            color = job.Status.Color,
+                            text= job.LoadNo + "\n " + job.LoadType
                         };
                         jobs.Add(result);
                     }
@@ -389,13 +391,13 @@ namespace BusinessLogic
             }
         }
 
-        public void AddJob(Job postData)
+        public void AddJob(Job jobData)
         {
             try
             {
                 using (db = new ApplicationDbContext())
                 {
-                    db.Job.Add(postData);
+                    db.Job.Add(jobData);
                     db.SaveChanges();
                 }
             }
