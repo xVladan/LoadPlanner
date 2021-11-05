@@ -18,11 +18,11 @@
                         dataType: 'json',
                         contentType: 'application/json; charset=utf-8',
                         success: (data) => {
-                            console.log("succ")
-                            $(data).each(function (el, item) {
-                                console.log(item);
+                        //    console.log("succ")
+                         //   $(data).each(function (el, item) {
+                         //       console.log(item);
                                /* docks.push(item);*/
-                            })
+                        //    })
                             d.resolve(data);
                         },
                         error: (data) => {
@@ -37,6 +37,66 @@
         return lookupDockSource;
     };
 
+    function statusesData() {
+        let d = new $.Deferred();
+        const lookupDockSource = {
+            store: new DevExpress.data.CustomStore({
+                key: "Id",
+                loadMode: "raw",
+                load: function () {
+                    return $.ajax({
+                        url: "/Status/GetStatus",
+                        type: "GET",
+                        data: "{}",
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        success: (data) => {
+                            console.log("succ");
+                            console.log(data);
+                            d.resolve(data);
+                        },
+                        error: (data) => {
+                            d.reject(data);
+                        }
+                    });
+                }
+            }),
+            sort: "text"
+        }
+        // console.log(docks)
+        return lookupDockSource;
+    };
+
+    function customerDropData() {
+        let d = new $.Deferred();
+        const lookupCustomerSource = {
+            store: new DevExpress.data.CustomStore({
+                key: "id",
+                loadMode: "raw",
+                load: function () {
+                    return $.ajax({
+                        url: "/Customer/CustomerDropdown",
+                        type: "GET",
+                        data: "{}",
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        success: (data) => {
+                         //   console.log(data)
+                            d.resolve(data);
+                        },
+                        error: (data) => {
+                            d.reject(data);
+                        }
+                    });
+                }
+            }),
+            sort: "text"
+        }
+        return lookupCustomerSource;
+    };
+
+
+
     var jobs = new DevExpress.data.DataSource({
         key: 'Id',
         load: function () {
@@ -49,6 +109,7 @@
                 data: "{}",
                 datatype: "json",
                 success: (data) => {
+                    console.log(data)
                     d.resolve(data)
                 },
                 error: (data) => {
@@ -59,10 +120,23 @@
         },
         insert: function (values) {
             console.log(values);
+
+            let arrtosend = {
+                LoadNo: Math.ceil(Math.random() * 100) + 1,
+                TransportStatusId: values.TransportStatusId,
+                CustomerId: values.CustomerId,
+                DockId: values.DockId,
+                NoOfPallets: Math.ceil(Math.random() * 100) + 1,
+                LoadType: values.text ? values.text :"load typle",
+                ArrivalTime: values.startDate,
+                startDate: values.startDate,
+                endDate: values.endDate
+            }
+            console.log(arrtosend);
             $.ajax({
                 url: "/Home/AddJob",
                 type: "POST",
-                data: JSON.stringify({ jobData: values }),
+                data: JSON.stringify({ jobData: arrtosend }),
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
@@ -117,8 +191,10 @@
             currentView: 'day',
             showAllDayPanel: false,
             groups: ['DockId'],
+           // allowMultiple:true,
             currentDate: new Date(),
-            height: 700,
+            height: 750,
+            //adaptivityEnabled: true,
             resources: [
                 {
                     dataSource: dockDropData(),
@@ -126,6 +202,21 @@
                     label: "Dock"
 
                 },
+                {
+                    dataSource: customerDropData(),
+                    fieldExpr: "CustomerId",
+                    label: "Customer"
+                },
+                {
+                    dataSource: statusesData(),
+                    fieldExpr: "TransportStatusId",
+                    displayExpr:"Status",
+                    colorExpr: "Color",
+                    valueExpr: "Id",
+                    label: "Status",
+                    useColorAsDefault: true
+                }
+                
             ]
         }).dxScheduler('instance');
     });
