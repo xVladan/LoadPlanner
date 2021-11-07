@@ -377,7 +377,7 @@ namespace BusinessLogic
                             ArrivalTime = job.ArrivalTime.ToString(),
                             startDate = job.startDate.ToString(),
                             endDate = job.endDate.ToString(),
-                            color = job.Status.Color,
+                           // color = job.Status.Color,
                             text= job.LoadNo + "\n " + job.LoadType
                         };
                         jobs.Add(result);
