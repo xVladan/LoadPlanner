@@ -4,6 +4,9 @@
     var docks = [];
     var statuses = [];
 
+    //prevent pushing to array same data more than once
+    var onFormOpening = 0;
+
     function dockDropData() {
         let d = new $.Deferred();
         const lookupDockSource = {
@@ -18,11 +21,6 @@
                         dataType: 'json',
                         contentType: 'application/json; charset=utf-8',
                         success: (data) => {
-                        //    console.log("succ")
-                         //   $(data).each(function (el, item) {
-                         //       console.log(item);
-                               /* docks.push(item);*/
-                        //    })
                             d.resolve(data);
                         },
                         error: (data) => {
@@ -33,7 +31,6 @@
             }),
             sort: "text"
         }
-       // console.log(docks)
         return lookupDockSource;
     };
 
@@ -51,8 +48,9 @@
                         dataType: 'json',
                         contentType: 'application/json; charset=utf-8',
                         success: (data) => {
-                            console.log("succ");
-                            console.log(data);
+                            $(data).each(function (el, item) {
+                                statuses.push(item);
+                            });
                             d.resolve(data);
                         },
                         error: (data) => {
@@ -63,7 +61,6 @@
             }),
             sort: "text"
         }
-        // console.log(docks)
         return lookupDockSource;
     };
 
@@ -81,7 +78,7 @@
                         dataType: 'json',
                         contentType: 'application/json; charset=utf-8',
                         success: (data) => {
-                         //   console.log(data)
+                            console.log(data);
                             d.resolve(data);
                         },
                         error: (data) => {
@@ -109,30 +106,31 @@
                 data: "{}",
                 datatype: "json",
                 success: (data) => {
-                    console.log(data)
                     d.resolve(data)
+                   // window.location.reload();
                 },
                 error: (data) => {
                     d.reject(data);
                 }
             });
+          //  window.location.reload();
+
             return d.promise();
         },
         insert: function (values) {
-            console.log(values);
-
+        
             let arrtosend = {
-                LoadNo: Math.ceil(Math.random() * 100) + 1,
-                TransportStatusId: values.TransportStatusId,
-                CustomerId: values.CustomerId,
+                LoadNo: values.LoadNo,
+                TransportStatusId: values.TransportStatusId ? values.TransportStatusId : 1,
+                CustomerId: values.CustomerId ? values.CustomerId : 1,
                 DockId: values.DockId,
-                NoOfPallets: Math.ceil(Math.random() * 100) + 1,
-                LoadType: values.text ? values.text :"load typle",
+                NoOfPallets: values.NoOfPallets,
+                LoadType: values.LoadType,
                 ArrivalTime: values.startDate,
                 startDate: values.startDate,
                 endDate: values.endDate
-            }
-            console.log(arrtosend);
+            };
+
             $.ajax({
                 url: "/Home/AddJob",
                 type: "POST",
@@ -140,6 +138,7 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
+           
         },
         update: function (key, values) {
             let jobArray = jobs.items();
@@ -191,10 +190,9 @@
             currentView: 'day',
             showAllDayPanel: false,
             groups: ['DockId'],
-           // allowMultiple:true,
+            showAllDayPanel: true,
             currentDate: new Date(),
-            height: 750,
-            //adaptivityEnabled: true,
+            height: 800,
             resources: [
                 {
                     dataSource: dockDropData(),
@@ -214,10 +212,106 @@
                     colorExpr: "Color",
                     valueExpr: "Id",
                     label: "Status",
-                    useColorAsDefault: true
-                }
+                    useColorAsDefault: true,
+                },
                 
-            ]
+            ],
+            onAppointmentFormCreated(data) {
+                const { form } = data;
+                let formItems = form.option("items");
+
+                //array without empty items
+                let myArr = [];
+
+                formItems.map(x => {
+                    if (x.itemType == "empty") {
+
+                    } else {
+                          myArr.push(x);
+                    }
+                });
+
+                //filtered myArr - without subject and description input
+                let filteredArr = [];
+                myArr.map(c => {
+                    if (c.label.text == "Subject" || c.label.text == "Description" || c.label.text == "Repeat") {
+
+                    } else {
+                        filteredArr.push(c);
+                    }
+                });
+
+                if (onFormOpening == 0) {
+                    filteredArr.push(
+                        {
+                            label: {
+                                text: 'Load Type',
+                            },
+                            name: 'LoadType',
+                            editorType: 'dxTextBox',
+                            type: 'required',
+                            validationRules: [{
+                                type: 'required',
+                                message: 'Load Type is required',
+                            }],
+                        },
+                        {
+                            label: {
+                                text: 'Load No',
+                            },
+                            name: 'LoadNo',
+                            editorType: 'dxNumberBox',
+                            validationRules: [{
+                                type: 'required',
+                                message: 'Load No is required',
+                            }],
+                        },
+                        {
+                            label: {
+                                text: 'No Of Pallets',
+                            },
+                            name: 'NoOfPallets',
+                            editorType: 'dxNumberBox',
+                            validationRules: [{
+                                type: 'required',
+                                message: 'No Of Palletes is required',
+                            }],
+                        },
+                       
+                    );
+                }
+
+                form.option({
+                    items: filteredArr
+                });
+                onFormOpening = onFormOpening + 1;
+              
+            },
+            appointmentTemplate(model) {
+                return $(`${"<div class='showtime-preview'>"
+                    + '<div>'}</div>`
+                    + `<div>Status: <br/><strong>${model.statusName}</strong>` + '<br/>'
+                    + `<div>Load No: <br/><strong>${model.LoadNo}</strong><br/>`
+                    + `<div>Customer: <br/><strong>${model.CustomerName}</strong><br/>`
+                   + '</div>');
+            },
+            appointmentTooltipTemplate(model) {
+                var dock = model.DockNum;
+                var derivedDockNo = dock.substr(dock.length - 1);//grabbing number from dockname
+              
+                return "<div class=\'movie-tooltip\'><div class=\'movie-info\'>" +
+                            "<div class=\'movie-title\'>Load No: " + model.LoadNo + "</div>" +
+                            "<div class=\'movie-title\'>Status: " + model.statusName + "</div>"+
+                            "<div class=\'movie-title\'>Customer: " + model.CustomerName + "</div>"+
+                            "<div class=\'movie-title\'>Dock: " + derivedDockNo  + "</div>"+
+                            "<div class=\'movie-title\'>No Pallets: " + model.NoOfPallets + "</div>" +
+                            "<div class=\'movie-title\'>Load Type: " + model.LoadType + "</div>" +
+                            "<div class=\'movie-title\'>Arrival Time: " + model.startDate + "</div>" +
+                            "<div class=\'movie-title\'>Dock On: " + model.startDate + "</div>" +
+                            "<div class=\'movie-title\'>Dock Off: " + model.endDate + "</div>" +
+                    "</div></div>";
+            },
+   
         }).dxScheduler('instance');
     });
 });
