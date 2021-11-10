@@ -23,29 +23,49 @@
         .body-wrapp .sidemenu {
             font-size: 22px;
             padding: 15px;
-            width:20%;
+            width:18%;
         }
 
         .sidemenu > div > p {
             text-decoration: none;
         }
         .body-wrapp .renderWrapp {
-            width: 80%;
+            width: 82%;
         }
         .a {
             text-decoration: none;
+        }
+        .link-side {
+            color: white;
+            text-decoration: none;
+            margin-top: 9px;
+        }
+
+        .font-size-title {
+            font-size: 33px;
+            padding-left: 30px;
+        }
+
+        .top-header {
+            padding-left:0;
+            padding-right:0;
+            min-width: 100vw;
+        }
+
+        .login-part {
+            margin-right: 30px;
         }
     </style>
 </head>
 <body>
     @{ if (User.Identity.IsAuthenticated)
         {
-            <nav class=" navbar navbar-light bg-dark">
+            <nav class=" navbar navbar-light bg-dark pt-4 pb-4  top-header">
                 <div class="container-fluid">
                     <h1>
-                        @Html.ActionLink("Transport Log", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "navbar-brand text-secondary" })
+                        @Html.ActionLink("Transport Log", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "navbar-brand text-secondary font-size-title" })
                     </h1>
-                    <div class="user-nav">
+                    <div class="user-nav login-part">
                         @Html.Partial("_LoginPartial")
                     </div>
                 </div>
@@ -53,15 +73,15 @@
             <div class="content-container float-start d-flex min-vh-100 body-wrapp" height="min-height:100vh;" width="100vw;" >
                 <div class="content-container  d-flex bg-dark pt-4 sidemenu" height="100%;">
                     <div class="pt-4 sidenav bg-dark">
-                        <p class="">@Html.ActionLink("Home", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "text-decoration-none" }) </p>
+                        <p class="">@Html.ActionLink("Home", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "link-side" }) </p>
                         @*User.IsInRole("admin")*@
                         @if (User.IsInRole("admin"))
                         {
-                            <p class="">@Html.ActionLink("User Management", "Index", "UserManagement", routeValues: null, htmlAttributes: new { @class = "text-decoration-none" }) </p>
+                            <p class="">@Html.ActionLink("User Management", "Index", "UserManagement", routeValues: null, htmlAttributes: new { @class = "link-side" }) </p>
                         }
-                        <p class="navlink"> @Html.ActionLink("Customers", "Index", "Customer", routeValues: null, htmlAttributes: new { @class = "text-decoration-none" })  </p>
-                        <p class="navlink">@Html.ActionLink("Transport Status", "Index", "Status", routeValues: null, htmlAttributes: new { @class = "text-decoration-none" }) </p>
-                        <p class="navlink"> @Html.ActionLink("Docks", "Index", "Dock", routeValues: null, htmlAttributes: new { @class = "text-decoration-none" }) </p>
+                        <p class="navlink"> @Html.ActionLink("Customers", "Index", "Customer", routeValues: null, htmlAttributes: new { @class = "link-side" })  </p>
+                        <p class="navlink">@Html.ActionLink("Transport Status", "Index", "Status", routeValues: null, htmlAttributes: new { @class = "link-side" }) </p>
+                        <p class="navlink"> @Html.ActionLink("Docks", "Index", "Dock", routeValues: null, htmlAttributes: new { @class = "link-side" }) </p>
                     </div>
                         @{
                             @*if (HttpContext.Current.User.IsInRole("admin"))
