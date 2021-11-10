@@ -362,9 +362,12 @@ namespace BusinessLogic
                 {
                     var dbJob = db.Job.Include(x=>x.Status).ToList();
                     List<JobDTO> jobs = new List<JobDTO>();
-
+  
                     foreach (var job in dbJob)
                     {
+                        var statName = db.TransportStatus.FirstOrDefault(x => x.Id == job.TransportStatusId);
+                        var customerName = db.Customer.FirstOrDefault(x => x.Id == job.CustomerId);
+                        var dockNum = db.Dock.FirstOrDefault(x => x.Id == job.DockId);
                         var result = new JobDTO
                         {
                             Id = job.Id,
@@ -377,8 +380,12 @@ namespace BusinessLogic
                             ArrivalTime = job.ArrivalTime.ToString(),
                             startDate = job.startDate.ToString(),
                             endDate = job.endDate.ToString(),
-                           // color = job.Status.Color,
-                            text= job.LoadNo + "\n " + job.LoadType
+                            // color = job.Status.Color,
+                            text = job.LoadType + " " + job.LoadNo,
+                            statusName = statName.Status,
+                            CustomerName = customerName.FirstName + " " + customerName.LastName,
+                            DockNum = dockNum.DockName
+                          
                         };
                         jobs.Add(result);
                     }
