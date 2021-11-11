@@ -208,13 +208,13 @@
                 {
                     dataSource: statusesData(),
                     fieldExpr: "TransportStatusId",
-                    displayExpr:"Status",
+                    displayExpr: "Status",
                     colorExpr: "Color",
                     valueExpr: "Id",
                     label: "Status",
                     useColorAsDefault: true,
                 },
-                
+
             ],
             onAppointmentFormCreated(data) {
                 const { form } = data;
@@ -227,7 +227,7 @@
                     if (x.itemType == "empty") {
 
                     } else {
-                          myArr.push(x);
+                        myArr.push(x);
                     }
                 });
 
@@ -277,7 +277,7 @@
                                 message: 'No Of Palletes is required',
                             }],
                         },
-                       
+
                     );
                 }
 
@@ -285,7 +285,7 @@
                     items: filteredArr
                 });
                 onFormOpening = onFormOpening + 1;
-              
+
             },
             appointmentTemplate(model) {
                 return $(`${"<div class='showtime-preview'>"
@@ -293,25 +293,35 @@
                     + `<div>Status: <br/><strong>${model.statusName}</strong>` + '<br/>'
                     + `<div>Load No: <br/><strong>${model.LoadNo}</strong><br/>`
                     + `<div>Customer: <br/><strong>${model.CustomerName}</strong><br/>`
-                   + '</div>');
+                    + '</div>');
             },
             appointmentTooltipTemplate(model) {
                 var dock = model.DockNum;
                 var derivedDockNo = dock.substr(dock.length - 1);//grabbing number from dockname
-              
+
                 return "<div class=\'movie-tooltip\'><div class=\'movie-info\'>" +
-                            "<div class=\'movie-title\'>Load No: " + model.LoadNo + "</div>" +
-                            "<div class=\'movie-title\'>Status: " + model.statusName + "</div>"+
-                            "<div class=\'movie-title\'>Customer: " + model.CustomerName + "</div>"+
-                            "<div class=\'movie-title\'>Dock: " + derivedDockNo  + "</div>"+
-                            "<div class=\'movie-title\'>No Pallets: " + model.NoOfPallets + "</div>" +
-                            "<div class=\'movie-title\'>Load Type: " + model.LoadType + "</div>" +
-                            "<div class=\'movie-title\'>Arrival Time: " + model.startDate + "</div>" +
-                            "<div class=\'movie-title\'>Dock On: " + model.startDate + "</div>" +
-                            "<div class=\'movie-title\'>Dock Off: " + model.endDate + "</div>" +
+                    "<div class=\'movie-title\'>Load No: " + model.LoadNo + "</div>" +
+                    "<div class=\'movie-title\'>Status: " + model.statusName + "</div>" +
+                    "<div class=\'movie-title\'>Customer: " + model.CustomerName + "</div>" +
+                    "<div class=\'movie-title\'>Dock: " + derivedDockNo + "</div>" +
+                    "<div class=\'movie-title\'>No Pallets: " + model.NoOfPallets + "</div>" +
+                    "<div class=\'movie-title\'>Load Type: " + model.LoadType + "</div>" +
+                    "<div class=\'movie-title\'>Arrival Time: " + model.startDate + "</div>" +
+                    "<div class=\'movie-title\'>Dock On: " + model.startDate + "</div>" +
+                    "<div class=\'movie-title\'>Dock Off: " + model.endDate + "</div>" +
+                    "<button onclick='deleteFunc(" + model.Id + ");' class='movie-title btn btn-danger d-flex align-items-center'> <i class='bi bi-trash-fill mb-1' ></i>  <span class='ml-1'>Delete</span></buttton>" +//<i class="bi bi-trash-fill"></i>
                     "</div></div>";
-            },
-   
+            },        
         }).dxScheduler('instance');
     });
 });
+
+function deleteFunc(id) {
+    $.ajax({
+        url: "/Home/DeleteJob",
+        type: "POST",
+        data: JSON.stringify({ Id: id }),
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+    });
+}
