@@ -107,14 +107,11 @@
                 datatype: "json",
                 success: (data) => {
                     d.resolve(data)
-                   // window.location.reload();
                 },
                 error: (data) => {
                     d.reject(data);
                 }
             });
-          //  window.location.reload();
-
             return d.promise();
         },
         insert: function (values) {
