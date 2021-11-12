@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace TestApp.Controllers
 {
+    [Authorize]
     public class UserManagementController : Controller
     {
         private MainBLL mainBLL = new MainBLL();
