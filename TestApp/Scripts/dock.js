@@ -117,6 +117,12 @@ function insertDataIntoTable() {
                 dataField: "DockName",
                 width: "15%",
                 dataType: "text",
+                validationRules: [{
+                    type: 'stringLength',
+                    message: 'The field Dock Name must be a string with minimum length 2 a maximum length of 10.',
+                    min: 2,
+                    max: 10,
+                }]
             },
         ],
     });
