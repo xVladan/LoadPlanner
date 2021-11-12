@@ -146,31 +146,67 @@ function insertDataIntoTable() {
                 dataField: "FirstName",
                 width: "15%",
                 dataType: "text",
+                validationRules: [{
+                    type: 'stringLength',
+                    message: 'The field First Name must be minimum length 2 and maximum length 25 characters.',
+                    min: 2,
+                    max: 25,
+                }]
             },
             {
                 dataField: "LastName",
                 width: "15%",
                 dataType: "text",
+                validationRules: [{
+                    type: 'stringLength',
+                    message: 'The field Last Name must be minimum length 2 and maximum length 25 characters.',
+                    min: 2,
+                    max: 25,
+                }]
             },
             {
                 dataField: "Address",
                 width: "15%",
                 dataType: "text",
+                validationRules: [{
+                    type: 'stringLength',
+                    message: 'The field Address must be minimum length 2 and maximum length 25 characters.',
+                    min: 2,
+                    max: 25,
+                }]
             },
             {
                 dataField: "City",
                 width: "15%",
                 dataType: "text",
+                validationRules: [{
+                    type: 'stringLength',
+                    message: 'The field City must be minimum length 2 and maximum length 25 characters.',
+                    min: 2,
+                    max: 25,
+                }]
             },
             {
                 dataField: "Country",
                 width: "15%",
                 dataType: "text",
+                validationRules: [{
+                    type: 'stringLength',
+                    message: 'The field Country must be minimum length 2 and maximum length 25 characters.',
+                    min: 2,
+                    max: 25,
+                }]
             },
             {
                 dataField: "Phone",
                 width: "15%",
                 dataType: "text",
+                validationRules: [{
+                    type: 'stringLength',
+                    message: 'The field Phone must be minimum length 6 and maximum length 25 characters.',
+                    min: 6,
+                    max: 25,
+                }]
             },
             {
                 dataField: "isActive",

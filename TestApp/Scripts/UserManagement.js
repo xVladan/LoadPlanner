@@ -22,6 +22,8 @@ function getAllUsers() {
             return userPromis.promise();
         },
         insert: function (values) {
+
+            console.log(values);
             
             $.ajax({
                 url: "/Account/SaveUser",
@@ -121,7 +123,7 @@ function getAllUsers() {
                 title: "User",
                 showTitle: true,
                 width: 500,
-                height: 525,
+              //  height: 625,
             },
             form: {
                 items: [
@@ -176,15 +178,33 @@ function getAllUsers() {
         columns: [
             {
                 dataField: "FirstName",
-                caption: "First Name"
+                caption: "First Name",
+                validationRules: [{
+                    type: 'stringLength',
+                    message: 'The field First Name must be minimum length 2 and maximum length 25 characters.',
+                    min: 2,
+                    max: 25,
+                }]
             },
             {
                 dataField: "LastName",
-                caption: "Last Name"
+                caption: "Last Name",
+                validationRules: [{
+                    type: 'stringLength',
+                    message: 'The field Last Name must be minimum length 2 and maximum length 25 characters.',
+                    min: 2,
+                    max: 25,
+                }]
             },
             {
                 dataField: "Address",
-                caption: "Address"
+                caption: "Address",
+                validationRules: [{
+                    type: 'stringLength',
+                    message: 'The field Address must be minimum length 2 and maximum length 25 characters.',
+                    min: 2,
+                    max: 25,
+                }]
             },
             //{
             //    dataField: "Id",
@@ -199,27 +219,57 @@ function getAllUsers() {
             {
                 dataField: "Country",
                 caption: "Country",
+                validationRules: [{
+                    type: 'stringLength',
+                    message: 'The field Country must be minimum length 2 and maximum length 25 characters.',
+                    min: 2,
+                    max: 25,
+                }]
             },
             {
                 dataField: "City",
-                caption: "City"
+                caption: "City",
+                validationRules: [{
+                    type: 'stringLength',
+                    message: 'The field City must be minimum length 2 and maximum length 25 characters.',
+                    min: 2,
+                    max: 25,
+                }]
             },
             {
                 dataField: "Email",
-                caption: "Email"
+                caption: "Email",
+                validationRules: [{
+                    type: 'email',
+                    message: 'The field Email must be minimum length 4 and maximum length 25 characters.',
+                    min: 4,
+                    max: 25,
+                }]
             },
             {
                 dataField: "Password",
                 caption: "Password",
                 visible: false,
+                validationRules: [{
+                    type: 'stringLength',
+                    message: 'The field Password must include upprecases, numbers and special characters. Length must be minimum 6 and maximum 33 characters.',
+                    min: 6,
+                    max: 33,
+                }],
                 allowEditing: {
                     formItem: {
                         visible: true
                     }
-                }
+                },
             },
             {
                 dataField: "Phone",
+                validationRules: [{
+                    type: 'stringLength',
+                    message: 'The field Phone must be minimum length 4 and maximum length 22 characters.',
+                    min: 4,
+                    max: 22,
+                }]
             },
             {
                 dataField: "RoleId",
@@ -230,6 +280,9 @@ function getAllUsers() {
                         visible: true
                     }
                 },
+                validationRules: [{
+                    type: 'required',
+                }],
                 lookup: {
                     dataSource: rolesDropdownData(),
                     valueExpr:"Id",
@@ -241,26 +294,6 @@ function getAllUsers() {
                 dataField: "isActive",
                 caption: "Is Active"
             },
-             
-            //},
-            //{
-            //    dataField: "RoleId",
-            //    caption: "Role",
-            //    dataType: "string",
-            //    visible: false,
-            //    allowEditing: {
-            //        formItem: {
-            //            visible: true
-            //        }
-            //    },
-            //    lookup:
-            //    {
-            //        dataSource: rolesDropdownData(),
-            //        valueExpr: "Id",
-            //        displayExpr: "Name",
-            //    }
-            //},
-
         ],
     }).dxDataGrid("instance");
 }
