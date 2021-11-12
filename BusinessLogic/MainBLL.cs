@@ -543,6 +543,7 @@ namespace BusinessLogic
                     userById.Address = user.Address;
                     userById.Email = user.Email;
                     userById.isActive = user.isActive;
+                    userById.Country = user.Country;
              //       userById.Password = user.Password;
                     userById.City = user.City;
                     //     userById.Role = user.Role;

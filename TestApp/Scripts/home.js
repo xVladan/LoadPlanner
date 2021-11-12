@@ -187,9 +187,9 @@
             currentView: 'day',
             showAllDayPanel: false,
             groups: ['DockId'],
-            showAllDayPanel: true,
+            showAllDayPanel: false,
             currentDate: new Date(),
-            height: 800,
+            height: 770,
             resources: [
                 {
                     dataSource: dockDropData(),
@@ -231,7 +231,7 @@
                 //filtered myArr - without subject and description input
                 let filteredArr = [];
                 myArr.map(c => {
-                    if (c.label.text == "Subject" || c.label.text == "Description" || c.label.text == "Repeat") {
+                    if (c.label.text == "Subject" || c.label.text == "Description" || c.label.text == "Repeat" || c.label.text == "All day") {
 
                     } else {
                         filteredArr.push(c);
