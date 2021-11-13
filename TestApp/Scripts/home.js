@@ -135,6 +135,7 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
+            window.location.reload();
            
         },
         update: function (key, values) {
@@ -159,6 +160,7 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
+            window.location.reload();
         },
         remove: function (key) {
             $.ajax({
@@ -168,7 +170,9 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
+            window.location.reload();
         }
+
     });
 
 
@@ -321,4 +325,5 @@ function deleteFunc(id) {
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
     });
+    window.location.reload();
 }
