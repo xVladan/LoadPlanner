@@ -127,20 +127,38 @@ function insertDataIntoTable() {
                 dataField: "Status",
                 width: "25%",
                 dataType: "text",
+                validationRules: [{
+                    type: 'stringLength',
+                    message: 'The field Status must be minimum length 2 and maximum length 15 characters.',
+                    min: 2,
+                    max: 15,
+                }]
             },
             {
                 dataField: "Color",
                 width: "25%",
                 dataType: "text",
+                validationRules: [{
+                    type: 'stringLength',
+                    message: 'The field Color must be minimum length 4 and maximum length 15 characters.',
+                    min: 4,
+                    max: 15,
+                }]
             },
             {
                 dataField: "Description",
                 width: "20%",
                 dataType: "text",
+                validationRules: [{
+                    type: 'stringLength',
+                    message: 'The field Description must be less than 30 characters.',
+                    min: 0,
+                    max: 30,
+                }]
             }
         ],
 
-            });
+    });
 
 
 }

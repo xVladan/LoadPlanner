@@ -36,6 +36,7 @@ namespace DAL.Models
             string userPassword = "Admin!123";
             string firstName = "Jon";
             string lastName = "Doe";
+
             ApplicationUser user = userManager.FindByEmail(userEmail);
             if (user == null)
             {
@@ -45,7 +46,7 @@ namespace DAL.Models
                     FirstName = firstName,
                     LastName = lastName,
                     Email = userEmail,
-                    isActive = true
+                    isActive = true,
                 };
 
                 IdentityResult userResult = userManager.Create(user, userPassword);

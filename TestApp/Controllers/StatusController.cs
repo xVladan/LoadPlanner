@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace TestApp.Controllers
 {
+    [Authorize]
     public class StatusController : Controller
     {
         private MainBLL mainBLL = new MainBLL();
