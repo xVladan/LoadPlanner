@@ -25,7 +25,7 @@ namespace BusinessLogic.DTO
        
         public string statusName { get; set; }
         public string CustomerName { get; set; }
-      //  public string  color { get; set; }
+        public string  color { get; set; }
         public string DockNum { get; set; }
         public string text { get; set; }
 
