@@ -26,7 +26,7 @@ function insertDataIntoTable() {
             return d.promise();
         },
         insert: function (values) {
-            console.log(values);
+           // console.log(values);
             $.ajax({
                 url: "/Dock/AddDock",
                 type: "POST",
