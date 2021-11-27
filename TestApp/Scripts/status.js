@@ -34,6 +34,7 @@ function insertDataIntoTable() {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
+            location.reload();
         },
         update: function (key, values) {
             let statusArray = status.items();
@@ -51,6 +52,7 @@ function insertDataIntoTable() {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
+            location.reload();
         },
         remove: function (key) {
             $.ajax({
@@ -60,6 +62,7 @@ function insertDataIntoTable() {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
+            location.reload();
         }
     });
 
@@ -140,8 +143,8 @@ function insertDataIntoTable() {
                 dataType: "text",
                 validationRules: [{
                     type: 'stringLength',
-                    message: 'The field Color must be minimum length 4 and maximum length 15 characters.',
-                    min: 4,
+                    message: 'The field Color must be minimum length 2 and maximum length 15 characters.',
+                    min: 2,
                     max: 15,
                 }]
             },

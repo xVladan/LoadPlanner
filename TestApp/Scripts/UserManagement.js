@@ -21,17 +21,14 @@ function getAllUsers() {
             });
             return userPromis.promise();
         },
-        insert: function (values) {
-
-            console.log(values);
-            
+        insert: function (values) {            
             $.ajax({
                 url: "/Account/SaveUser",
                 type: "POST",
                 data: JSON.stringify({ model: values }),
                 contentType: 'application/json; charset=utf-8',
             });
-            console.log(values)
+            location.reload();
         },
         update: function (key, values) {
             const users = usersDataSource.items();
@@ -58,7 +55,7 @@ function getAllUsers() {
                 data: JSON.stringify({ Id: key, editData: editedUser }),
                 contentType: 'application/json; charset=utf-8',
             });
-            console.log(editedUser);
+            location.reload();
 
         },
         remove: function (key) {
@@ -68,7 +65,8 @@ function getAllUsers() {
                 data: JSON.stringify({ Id: key }),
                 contentType: 'application/json; charset=utf-8',
             });
-            $("#usersGrid").dxDataGrid("instance").refresh()
+            location.reload();s
+          //  $("#usersGrid").dxDataGrid("instance").refresh()
         }
     });
     function rolesDropdownData() {

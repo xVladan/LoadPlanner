@@ -395,6 +395,8 @@
     <Content Include="Content\DX\css\icons\dxiconsios.ttf" />
     <Content Include="Content\DX\css\icons\dxiconsios.woff" />
     <None Include="Properties\PublishProfiles\TransportLog - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\TransportLogPlanner - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\TransportLogPlanner - Web Deploy1.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\customer.js" />
     <Content Include="Scripts\dock.js" />
