@@ -290,7 +290,8 @@ function getAllUsers() {
              
             {
                 dataField: "isActive",
-                caption: "Is Active"
+                caption: "Is Active",
+                value: true
             },
         ],
     }).dxDataGrid("instance");
