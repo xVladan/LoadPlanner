@@ -1,9 +1,10 @@
 ﻿$(document).ready(() => {
 
     insertDataIntoTable();
+
 });
 
-
+var onprepind = 0;
 function insertDataIntoTable() {
     var status = new DevExpress.data.DataSource({
         key: 'Id',
@@ -66,8 +67,10 @@ function insertDataIntoTable() {
         }
     });
 
+
     $("#dataGrid").dxDataGrid({
         dataSource: status,
+        keyExpr: 'id',
         showBorders: true,
         paging: {
             pageSize: 10
@@ -90,8 +93,9 @@ function insertDataIntoTable() {
                 width: 700,
                 height: 525,
             },
-            form: {
-                items: [
+            form:{
+               
+                items:[
                     {
                         itemType: "group",
                         colCount: 2,
@@ -101,10 +105,30 @@ function insertDataIntoTable() {
                                 dataField: "Status",
                                 colSpan: 2,
                             },
+                            //{
+                            //    dataField: "Color",
+                            //  //  editorType: "dxColorBox",
+                            //    editorType: {
+                            //        type: "dxColorBox",
+                            //        value:"#f05b41",
+                            //    },
+                               
+                            //},
                             {
                                 dataField: "Color",
+                                editorType: "dxColorBox",
+                                editorName: "dxColorBox",
                                 colSpan: 2,
-                            },
+                                //formItem: {
+                                //    colSpan: 2,
+                                //    editorType: 'ColorBox',
+                                //    editorOptions: {
+                                //        height: 100,
+                                //        value:'#f0acdd'
+                                //    }
+                                //},
+                            }
+                            ,
                             {
                                 dataField: "Description",
                                 colSpan: 2,
@@ -138,9 +162,18 @@ function insertDataIntoTable() {
                 }]
             },
             {
-                dataField: "Color",
-                width: "25%",
-                dataType: "text",
+                      dataField: "Color",
+                      //formItem: {
+                      //    colSpan: 2,
+                      //    editorType: 'ColorBox',
+                      //    editorOptions: {
+                      //        height: 100,
+                      //        value: '#f0acdd'
+                      //    }
+                      //},
+
+                editorType: "dxColorBox",
+                editorName: "dxColorBox",
                 validationRules: [{
                     type: 'stringLength',
                     message: 'The field Color must be minimum length 2 and maximum length 15 characters.',
@@ -160,8 +193,97 @@ function insertDataIntoTable() {
                 }]
             }
         ],
+       
+        onEditorPreparing(e) {
+            onprepind = 0;
+            if (onprepind < 1) {
+                let a = document.querySelectorAll('.dx-texteditor-input');//dx-datagrid-edit-form-item ''' dx-texteditor-container
+
+                $(a).each(function (el, it) {
+                    let tmp = it.id;
+                    if (tmp.includes('Color')) {
+                        //change type to color box
+                        it.type = 'color';
+                        //it.value = '#000000';
+                        it.style.width = '350px';
+                        it.style.height = '35px';
+                        it.style.marginLeft = '200px';
+                        it.innerText = it.value;
+
+                        it.addEventListener('change', function () {
+                            colorInpWrapp.innerText = it.value;
+                         //   this.value = colorInpWrapp.innerText;
+                        });
+
+
+                        //////creating inp;
+                        let parentColorInpWrapp = $(it).parent();
+
+                        let colorInpWrapp = document.createElement('div');
+                        colorInpWrapp.style.width = '200px';
+                        colorInpWrapp.style.height = '34px';
+                        colorInpWrapp.style.position = 'absolute';
+                        colorInpWrapp.style.top = '7px';
+                        colorInpWrapp.style.left = '10px';
+
+                    //    colorInpWrapp.innerText = it.value;
+
+
+                        //appending to the parent
+                        parentColorInpWrapp.append(colorInpWrapp);
+
+                        ////change type to color box
+                        //it.type = 'color';
+                        //it.addEventListener('change', function () {
+                        //    colorInpWrapp.innerHTML = it.value;
+                        //});
+                        //it.style.width = '150px';
+                        //it.style.height = '35px';
+                        //it.style.marginLeft = '412px';
+
+                    }
+                })
+                onprepind++;
+
+            }          
+        },
+        //onEditingStart() {
+        //    console.log('EditingStart');
+        //},
+        //onInitNewRow(con) {
+        //    console.log(con)
+        //    console.log('InitNewRow');
+        //},
+        //onRowInserting() {
+        //    console.log('RowInserting');
+        //},
+        //onRowInserted() {
+        //    console.log('RowInserted');
+        //},
+        //onRowUpdating() {
+        //    console.log('RowUpdating');
+        //},
+        //onRowUpdated() {
+        //    console.log('RowUpdated');
+        //},
+        //onRowRemoving() {
+        //    console.log('RowRemoving');
+        //},
+        //onRowRemoved() {
+        //    console.log('RowRemoved');
+        //},
+        //onSaving() {
+        //    console.log('Saving');
+        //},
+        //onSaved() {
+        //    console.log('Saved');
+        //},
+        //onEditCanceling() {
+        //    console.log('EditCanceling');
+        //},
+        //onEditCanceled() {
+        //    console.log('EditCanceled');
+        //},
 
     });
-
-
-}
+ }
