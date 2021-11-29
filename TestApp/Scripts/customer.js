@@ -215,6 +215,7 @@ function insertDataIntoTable() {
                 dataField: "isActive",
                 width: "8%",
                 dataType: "boolean",
+                value: true
             },
         ],
     });
