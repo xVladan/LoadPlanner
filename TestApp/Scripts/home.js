@@ -135,7 +135,7 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
-            window.location.reload();
+       //     window.location.reload();
            
         },
         update: function (key, values) {
@@ -160,7 +160,7 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
-            window.location.reload();
+        //   window.location.reload();
         },
         remove: function (key) {
             $.ajax({
@@ -170,7 +170,7 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
-            window.location.reload();
+        //    window.location.reload();
         }
 
     });
@@ -194,6 +194,11 @@
             showAllDayPanel: false,
             currentDate: new Date(),
             height: 770,
+            stateStoring: {
+                enabled: true,
+                type: 'localStorage',
+                storageKey: 'storage',
+            },
             resources: [
                 {
                     dataSource: dockDropData(),
@@ -217,6 +222,14 @@
                 },
 
             ],
+            editing: {
+                refreshMode: 'full',
+                mode: 'cell',
+                allowAdding: true,
+                allowUpdating: true,
+                allowDeleting: true,
+                allowDragging: true
+            },
             onAppointmentFormCreated(data) {
                 const { form } = data;
                 let formItems = form.option("items");
