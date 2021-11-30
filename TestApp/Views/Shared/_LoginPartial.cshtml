@@ -6,8 +6,8 @@
         @Html.AntiForgeryToken()
 
         <div>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "badge btn btn-secondary fs-6 m-1 p-2" })
-            <a class="badge btn btn-secondary fs-6 m-1 p-2" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+            @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "badge btn btn-secondary fs-6 m-1 p-2" })*@
+            <a class="btn btn-primary" href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
         </div>
     }
 }

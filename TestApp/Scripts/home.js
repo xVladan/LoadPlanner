@@ -193,6 +193,7 @@
             groups: ['DockId'],
             showAllDayPanel: false,
             currentDate: new Date(),
+            width: 1250,
             height: 770,
             stateStoring: {
                 enabled: true,

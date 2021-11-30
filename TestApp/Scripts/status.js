@@ -205,9 +205,9 @@ function insertDataIntoTable() {
                         //change type to color box
                         it.type = 'color';
                         //it.value = '#000000';
-                        it.style.width = '350px';
+                        it.style.width = '150px';
                         it.style.height = '35px';
-                        it.style.marginLeft = '200px';
+                        it.style.marginLeft = '400px';
                         it.innerText = it.value;
 
                         it.addEventListener('change', function () {
