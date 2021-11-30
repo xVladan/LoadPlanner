@@ -59,7 +59,15 @@ namespace DAL
             builder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             builder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             builder.Conventions.Remove<PluralizingTableNameConvention>();
-          
+           // builder.
+            //builder.Entity<TransportStatus>().HasData(new TransportStatus
+            //{
+            //                                Color = "#ffffff",
+            //                                Description = "William",
+            //                                Status = "Shakespeare"
+            //                            }
+            //                        );
+
             //builder.Entity<TenderStatus>().HasIndex(e => e.Type).IsUnique();
         }
 
