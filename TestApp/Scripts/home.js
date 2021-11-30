@@ -78,7 +78,6 @@
                         dataType: 'json',
                         contentType: 'application/json; charset=utf-8',
                         success: (data) => {
-                            console.log(data);
                             d.resolve(data);
                         },
                         error: (data) => {
@@ -125,9 +124,13 @@
                 LoadType: values.LoadType,
                 ArrivalTime: values.startDate,
                 startDate: values.startDate,
-                endDate: values.endDate
-            };
+                endDate: values.endDate,
+                Height: values.Height,
+                Width: values.Width,
+                Depth: values.Depth,
+                Notes: values.Notes,
 
+            };
             $.ajax({
                 url: "/Home/AddJob",
                 type: "POST",
@@ -135,7 +138,6 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
-            window.location.reload();
            
         },
         update: function (key, values) {
@@ -152,6 +154,10 @@
                 ArrivalTime: values.ArrivalTime ? values.ArrivalTime : editedJob.ArrivalTime,
                 startDate: values.startDate ? values.startDate : editedJob.startDate,
                 endDate: values.endDate ? values.endDate : editedJob.endDate,
+                Height: values.Height ? values.Height : editedJob.Height,
+                Width: values.Width ? values.Width : editedJob.Width,
+                Depth: values.Depth ? values.Depth : editedJob.Depth,
+                Notes: values.Notes ? values.Notes : editedJob.Notes,
             }
             $.ajax({
                 url: "/Home/EditJob",
@@ -160,7 +166,6 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
-            window.location.reload();
         },
         remove: function (key) {
             $.ajax({
@@ -170,7 +175,6 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
-            window.location.reload();
         }
 
     });
@@ -278,13 +282,115 @@
                                 message: 'No Of Palletes is required',
                             }],
                         },
+                        {
+                            label: {
+                                text: 'Height',
+                            },
+                            cssClass: "height-item",
+                            name: 'Height',
+                            editorType: 'dxNumberBox',
+                            validationRules: [{
+                                type: 'required',
+                                message: 'Height is required',
+                            }],
+                            editorOptions: {
+                                onKeyUp: function (e) {
+                                    var value = Number(e.element.find(".dx-texteditor-input").val());
+
+                                    var Depth = Number($(".width-item").find(".dx-texteditor-input").val());
+                                    var Width = Number($(".height-item").find(".dx-texteditor-input").val());
+
+                                    var result = value * Depth * Width;
+                                    $(".cubic-item").find(".dx-texteditor-input").val(result)
+                                }
+                            },
+                        },
+                        {
+                            label: {
+                                text: 'Width',
+                            },
+                            cssClass: "width-item",
+                            name: 'Width',
+                            editorType: 'dxNumberBox',
+                            validationRules: [{
+                                type: 'required',
+                                message: 'Width is required',
+                            }],
+                            editorOptions: {
+                                onKeyUp: function (e) {
+                                    var value = Number(e.element.find(".dx-texteditor-input").val());
+
+                                    var Depth = Number($(".width-item").find(".dx-texteditor-input").val());
+                                    var Height = Number($(".height-item").find(".dx-texteditor-input").val());
+
+                                    var result = value * Depth * Height;
+                                    $(".cubic-item").find(".dx-texteditor-input").val(result)
+                                }
+                            },
+                        },
+                        {
+                            label: {
+                                text: 'Depth',
+                            },
+                            cssClass: "depth-item",
+                            name: 'Depth',
+                            editorType: 'dxNumberBox',
+                            validationRules: [{
+                                type: 'required',
+                                message: 'Depth is required',
+                            }],
+                            editorOptions: {
+                                onKeyUp: function (e) {
+                                    var value = Number(e.element.find(".dx-texteditor-input").val());
+
+                                    var Width = Number($(".width-item").find(".dx-texteditor-input").val());
+                                    var Height = Number($(".height-item").find(".dx-texteditor-input").val());
+
+                                    var result = value * Width * Height;
+                                    $(".cubic-item").find(".dx-texteditor-input").val(result)
+                                }
+                            },
+                        },
+                        {
+                            label: {
+                                text: 'Cubic',
+                            },
+                            cssClass: "cubic-item",
+                            name: 'Cubic',
+                            editorType: 'dxNumberBox',
+                            allowEditing: false,
+                            editorOptions: {
+                                onKeyUp: function (e) {
+                                    var value = Number(e.element.find(".dx-texteditor-input").val());
+
+                                    var Width = Number($(".width-item").find(".dx-texteditor-input").val());
+                                    var Height = Number($(".height-item").find(".dx-texteditor-input").val());
+                                    var Depth = Number($(".width-item").find(".dx-texteditor-input").val());
+
+                                    var result = Depth * Width * Height;
+                                    $(".cubic-item").find(".dx-texteditor-input").val();
+                                },
+                            },
+
+                        },
+                        {
+                            label: {
+                                text: 'Notes',
+                            },
+                            name: 'Notes',
+                            editorType: 'dxTextArea',
+                        },
 
                     );
                 }
 
                 form.option({
-                    items: filteredArr
+                    items: filteredArr,
                 });
+
+
+
+              
                 onFormOpening = onFormOpening + 1;
 
             },
@@ -294,6 +400,7 @@
                     + `<div>Status: <br/><strong>${model.statusName}</strong>` + '<br/>'
                     + `<div>Load No: <br/><strong>${model.LoadNo}</strong><br/>`
                     + `<div>Customer: <br/><strong>${model.CustomerName}</strong><br/>`
+                    + `<div>Notes: <br/><strong>${model.Notes}</strong><br/>`
                     + '</div>');
             },
             appointmentTooltipTemplate(model) {
@@ -310,6 +417,7 @@
                     "<div class=\'movie-title\'>Arrival Time: " + model.startDate + "</div>" +
                     "<div class=\'movie-title\'>Dock On: " + model.startDate + "</div>" +
                     "<div class=\'movie-title\'>Dock Off: " + model.endDate + "</div>" +
+                    "<div class=\'movie-title\'>Notes: " + model.Notes + "</div>" +
                     "<button onclick='deleteFunc(" + model.Id + ");' class='movie-title btn btn-danger d-flex align-items-center'> <i class='bi bi-trash-fill mb-1' ></i>  <span class='ml-1'>Delete</span></buttton>" +//<i class="bi bi-trash-fill"></i>
                     "</div></div>";
             },        

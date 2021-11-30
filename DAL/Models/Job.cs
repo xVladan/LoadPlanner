@@ -44,6 +44,12 @@ namespace DAL.Models
 
         [DisplayName("Dock Off")]
         public DateTime endDate { get; set; }
+        public decimal Height { get; set;  }
+        public decimal Width { get; set; }
+        public decimal Depth { get; set; }
+        public decimal Cubic { get; set; }
+        public string Notes { get; set; }
+
 
 
 

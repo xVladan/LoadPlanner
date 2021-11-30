@@ -33,6 +33,7 @@ function insertDataIntoTable() {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
+            location.reload();
         },
         update: function (key, values) {
             let customerArray = customer.items();
