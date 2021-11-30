@@ -294,14 +294,14 @@
                                 message: 'Height is required',
                             }],
                             editorOptions: {
-                                onKeyUp: function (e) {
+                                onValueChanged: function (e) {
                                     var value = Number(e.element.find(".dx-texteditor-input").val());
 
                                     var Depth = Number($(".width-item").find(".dx-texteditor-input").val());
                                     var Width = Number($(".height-item").find(".dx-texteditor-input").val());
 
                                     var result = value * Depth * Width;
-                                    $(".cubic-item").find(".dx-texteditor-input").val(result)
+                                    $(".cubic-item").find(".dx-texteditor-input").val()
                                 }
                             },
                         },
@@ -317,14 +317,14 @@
                                 message: 'Width is required',
                             }],
                             editorOptions: {
-                                onKeyUp: function (e) {
+                                onValueChanged: function (e) {
                                     var value = Number(e.element.find(".dx-texteditor-input").val());
 
                                     var Depth = Number($(".width-item").find(".dx-texteditor-input").val());
                                     var Height = Number($(".height-item").find(".dx-texteditor-input").val());
 
                                     var result = value * Depth * Height;
-                                    $(".cubic-item").find(".dx-texteditor-input").val(result)
+                                    $(".cubic-item").find(".dx-texteditor-input").val()
                                 }
                             },
                         },
@@ -340,7 +340,7 @@
                                 message: 'Depth is required',
                             }],
                             editorOptions: {
-                                onKeyUp: function (e) {
+                                onValueChanged: function (e) {
                                     var value = Number(e.element.find(".dx-texteditor-input").val());
 
                                     var Width = Number($(".width-item").find(".dx-texteditor-input").val());
@@ -358,9 +358,9 @@
                             cssClass: "cubic-item",
                             name: 'Cubic',
                             editorType: 'dxNumberBox',
-                            allowEditing: false,
                             editorOptions: {
-                                onKeyUp: function (e) {
+                                disabled: true,
+                                onValueChanged: function (e) {
                                     var value = Number(e.element.find(".dx-texteditor-input").val());
 
                                     var Width = Number($(".width-item").find(".dx-texteditor-input").val());
