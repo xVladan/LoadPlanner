@@ -4,6 +4,9 @@
     var docks = [];
     var statuses = [];
 
+    //input Cubic disabled popup
+    var result = 0;
+
     //prevent pushing to array same data more than once
     var onFormOpening = 0;
 
@@ -308,14 +311,42 @@
                                 message: 'Height is required',
                             }],
                             editorOptions: {
+                                
                                 onValueChanged: function (e) {
-                                    var value = Number(e.element.find(".dx-texteditor-input").val());
+                                    let value = e.value;                            
 
-                                    var Depth = Number($(".width-item").find(".dx-texteditor-input").val());
-                                    var Width = Number($(".height-item").find(".dx-texteditor-input").val());
+                                    //width inp digg
+                                    let width = $('.width-item').children()[1]
+                                    let widthInner1 = $(width).children()[0];
+                                    let widthInner2 = $(widthInner1).children()[1];
+                                    let widthInner3 = $(widthInner2).children()[0];
 
-                                    var result = value * Depth * Width;
-                                    $(".cubic-item").find(".dx-texteditor-input").val()
+                                    //width-inp
+                                    let widthInp = $(widthInner3).val();
+                 
+                                    //depth inp digg
+                                    let depth = $('.depth-item').children()[1]
+                                    let depthInner1 = $(depth).children()[0];
+                                    let depthInner2 = $(depthInner1).children()[1];
+                                    let depthInner3 = $(depthInner2).children()[0];
+
+                                    //depth-inp
+                                    let depthInp = $(depthInner3).val();
+                              
+
+                                    //cubic inp dig
+                                    let cubRes = $('.cubic-item').children()[1]
+                                    let cubResInner1 = $(cubRes).children()[0];
+                                    let cubResInner2 = $(cubResInner1).children()[1];
+                                    let cubResInner3 = $(cubResInner2).children()[0];
+
+                                    //depth-inp
+                                    let cubResInp = cubResInner3;
+
+
+                                   result = value * widthInp * depthInp;
+                                    cubResInp.placeholder = result;
+                       
                                 }
                             },
                         },
@@ -332,13 +363,40 @@
                             }],
                             editorOptions: {
                                 onValueChanged: function (e) {
-                                    var value = Number(e.element.find(".dx-texteditor-input").val());
+                                    let value = e.value;
 
-                                    var Depth = Number($(".width-item").find(".dx-texteditor-input").val());
-                                    var Height = Number($(".height-item").find(".dx-texteditor-input").val());
+                                    //height inp digg
+                                    let height = $('.height-item').children()[1]
+                                    let heightInner1 = $(height).children()[0];
+                                    let heightInner2 = $(heightInner1).children()[1];
+                                    let heightInner3 = $(heightInner2).children()[0];
 
-                                    var result = value * Depth * Height;
-                                    $(".cubic-item").find(".dx-texteditor-input").val()
+                                    //height-inp
+                                    let heightInp = $(heightInner3).val();
+
+                                    //depth inp digg
+                                    let depth = $('.depth-item').children()[1]
+                                    let depthInner1 = $(depth).children()[0];
+                                    let depthInner2 = $(depthInner1).children()[1];
+                                    let depthInner3 = $(depthInner2).children()[0];
+
+                                    //depth-inp
+                                    let depthInp = $(depthInner3).val();
+
+
+                                    //cubic inp dig
+                                    let cubRes = $('.cubic-item').children()[1]
+                                    let cubResInner1 = $(cubRes).children()[0];
+                                    let cubResInner2 = $(cubResInner1).children()[1];
+                                    let cubResInner3 = $(cubResInner2).children()[0];
+
+                                    //depth-inp
+                                    let cubResInp = cubResInner3;
+
+
+                                    result = value * heightInp * depthInp;
+                                    cubResInp.placeholder = result;
+
                                 }
                             },
                         },
@@ -355,13 +413,39 @@
                             }],
                             editorOptions: {
                                 onValueChanged: function (e) {
-                                    var value = Number(e.element.find(".dx-texteditor-input").val());
+                                    let value = e.value;
 
-                                    var Width = Number($(".width-item").find(".dx-texteditor-input").val());
-                                    var Height = Number($(".height-item").find(".dx-texteditor-input").val());
+                                    //width inp digg
+                                    let width = $('.width-item').children()[1]
+                                    let widthInner1 = $(width).children()[0];
+                                    let widthInner2 = $(widthInner1).children()[1];
+                                    let widthInner3 = $(widthInner2).children()[0];
 
-                                    var result = value * Width * Height;
-                                    $(".cubic-item").find(".dx-texteditor-input").val(result)
+                                    //width-inp
+                                    let widthInp = $(widthInner3).val();
+
+                                    //height inp digg
+                                    let height = $('.height-item').children()[1]
+                                    let heightInner1 = $(height).children()[0];
+                                    let heightInner2 = $(heightInner1).children()[1];
+                                    let heightInner3 = $(heightInner2).children()[0];
+
+                                    //height-inp
+                                    let heightInp = $(heightInner3).val();
+
+                                    //cubic inp dig
+                                    let cubRes = $('.cubic-item').children()[1]
+                                    let cubResInner1 = $(cubRes).children()[0];
+                                    let cubResInner2 = $(cubResInner1).children()[1];
+                                    let cubResInner3 = $(cubResInner2).children()[0];
+
+                                    //depth-inp
+                                    let cubResInp = cubResInner3;
+
+                                    result = value * heightInp * widthInp;
+                                    cubResInp.placeholder = result;
+
+
                                 }
                             },
                         },
@@ -373,17 +457,8 @@
                             name: 'Cubic',
                             editorType: 'dxNumberBox',
                             editorOptions: {
-                                disabled: true,
-                                onValueChanged: function (e) {
-                                    var value = Number(e.element.find(".dx-texteditor-input").val());
-
-                                    var Width = Number($(".width-item").find(".dx-texteditor-input").val());
-                                    var Height = Number($(".height-item").find(".dx-texteditor-input").val());
-                                    var Depth = Number($(".width-item").find(".dx-texteditor-input").val());
-
-                                    var result = Depth * Width * Height;
-                                    $(".cubic-item").find(".dx-texteditor-input").val();
-                                },
+                                readOnly: true
+                               
                             },
 
                         },
