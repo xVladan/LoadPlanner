@@ -19,10 +19,16 @@ namespace BusinessLogic.DTO
         public string ArrivalTime { get; set; }
         public string startDate { get; set; }
         public string endDate { get; set; }
+        public decimal Height { get; set; }
+        public decimal Width { get; set; }
+        public decimal Depth { get; set; }
+        public decimal Cubic { get; set; }
+        public string Notes { get; set; }
+
 
         ////////////
-       /// Tooltip helper
-       
+        /// Tooltip helper
+
         public string statusName { get; set; }
         public string CustomerName { get; set; }
         public string  color { get; set; }

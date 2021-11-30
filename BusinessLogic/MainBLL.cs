@@ -380,11 +380,15 @@ namespace BusinessLogic
                             ArrivalTime = job.ArrivalTime.ToString(),
                             startDate = job.startDate.ToString(),
                             endDate = job.endDate.ToString(),
-                            // color = job.Status.Color,
                             text = job.LoadType + " " + job.LoadNo,
                             statusName = statName.Status,
                             CustomerName = customerName.FirstName + " " + customerName.LastName,
-                            DockNum = dockNum.DockName
+                            DockNum = dockNum.DockName,
+                            Height = job.Height,
+                            Width = job.Width,
+                            Depth = job.Depth,
+                            Cubic = job.Cubic,
+                            Notes = job.Notes,
                           
                         };
                         jobs.Add(result);
@@ -397,6 +401,10 @@ namespace BusinessLogic
                 throw;
             }
         }
+        public decimal CalculateCubic(decimal Width, decimal Height, decimal Depth) 
+        {
+            return Width * Height * Depth;
+        }
 
         public void AddJob(Job jobData)
         {
@@ -404,6 +412,7 @@ namespace BusinessLogic
             {
                 using (db = new ApplicationDbContext())
                 {
+                    jobData.Cubic = CalculateCubic(jobData.Width, jobData.Height, jobData.Depth);
                     db.Job.Add(jobData);
                     db.SaveChanges();
                 }
@@ -431,6 +440,11 @@ namespace BusinessLogic
                     jobId.ArrivalTime = jobData.ArrivalTime;
                     jobId.startDate = jobData.startDate;
                     jobId.endDate = jobData.endDate;
+                    jobId.Height = jobData.Height;
+                    jobId.Width = jobData.Width;
+                    jobId.Depth = jobData.Depth;
+                    jobId.Cubic = jobData.Cubic;
+                    jobId.Notes = jobData.Notes;
                     db.SaveChanges();
                 }
             }
