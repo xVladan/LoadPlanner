@@ -146,6 +146,9 @@
         update: function (key, values) {
             let jobArray = jobs.items();
             let editedJob = jobArray.find(item => item.Id === key)
+
+            let test = values.Notes == null ? "" : values.Notes;
+            console.log(test)
             editedJob = {
                 ...editedJob,
                 LoadNo: values.LoadNo ? values.LoadNo : editedJob.LoadNo,
@@ -160,7 +163,7 @@
                 Height: values.Height ? values.Height : editedJob.Height,
                 Width: values.Width ? values.Width : editedJob.Width,
                 Depth: values.Depth ? values.Depth : editedJob.Depth,
-                Notes: values.Notes ? values.Notes : editedJob.Notes,
+                Notes: values.Notes == null ? "" : values.Notes
             }
             $.ajax({
                 url: "/Home/EditJob",
