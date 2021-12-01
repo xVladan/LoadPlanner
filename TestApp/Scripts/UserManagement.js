@@ -1,25 +1,26 @@
-﻿$(document).ready(function () {
+﻿$(document).ready(() => {
     getAllUsers();
 });
 
 function getAllUsers() {
-    let userPromis = $.Deferred();
     let usersDataSource = new DevExpress.data.DataSource({
         key: "Id",
-        load: () => {
+        load: function () {
+            var d = new $.Deferred();
+
             $.ajax({
                 type: "GET",
                 url: "/UserManagement/GetUsers",
                 contentType: "application/json",
                 data: "{}",
                 success: (data) => {
-                    userPromis.resolve(data);
+                    d.resolve(data);
                 },
                 error: (data) => {
-                    userPromis.reject(data);
+                    d.reject(data);
                 }
             });
-            return userPromis.promise();
+            return d.promise();
         },
         insert: function (values) {            
             $.ajax({
@@ -52,10 +53,11 @@ function getAllUsers() {
             $.ajax({
                 url: "/UserManagement/EditUser",
                 type: "POST",
-                data: JSON.stringify({ Id: key, editData: editedUser }),
+                data: JSON.stringify(editedUser),
                 contentType: 'application/json; charset=utf-8',
+                processData: false,
             });
-            location.reload();
+            return false;
 
         },
         remove: function (key) {
@@ -64,9 +66,9 @@ function getAllUsers() {
                 type: "POST",
                 data: JSON.stringify({ Id: key }),
                 contentType: 'application/json; charset=utf-8',
+                processData: false,
             });
-            location.reload();s
-          //  $("#usersGrid").dxDataGrid("instance").refresh()
+            return false;
         }
     });
     function rolesDropdownData() {

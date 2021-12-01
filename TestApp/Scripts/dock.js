@@ -34,8 +34,7 @@ function insertDataIntoTable() {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
-
-            location.reload();
+            return false;
         },
         update: function (key, values) {
             let dockArray = dock.items();
@@ -51,7 +50,7 @@ function insertDataIntoTable() {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
-            location.reload();
+            return false;
         },
         remove: function (key) {
             $.ajax({
@@ -61,7 +60,7 @@ function insertDataIntoTable() {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
-            location.reload();
+            return false;
         }
     });
 

@@ -138,7 +138,7 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
-           
+            return false;
         },
         update: function (key, values) {
             let jobArray = jobs.items();
@@ -169,6 +169,7 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
+            return false;
         },
         remove: function (key) {
             $.ajax({
@@ -178,6 +179,7 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
+            return false;
         }
 
     });
@@ -522,4 +524,5 @@ function deleteFunc(id) {
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
     });
+    return false;
 }

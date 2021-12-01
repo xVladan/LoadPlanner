@@ -35,7 +35,7 @@ function insertDataIntoTable() {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
-            location.reload();
+            return false;
         },
         update: function (key, values) {
             let statusArray = status.items();
@@ -53,7 +53,7 @@ function insertDataIntoTable() {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
-            location.reload();
+            return false;
         },
         remove: function (key) {
             $.ajax({
@@ -63,7 +63,7 @@ function insertDataIntoTable() {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
-            location.reload();
+            return false;
         }
     });
 
@@ -247,43 +247,6 @@ function insertDataIntoTable() {
 
             }          
         },
-        //onEditingStart() {
-        //    console.log('EditingStart');
-        //},
-        //onInitNewRow(con) {
-        //    console.log(con)
-        //    console.log('InitNewRow');
-        //},
-        //onRowInserting() {
-        //    console.log('RowInserting');
-        //},
-        //onRowInserted() {
-        //    console.log('RowInserted');
-        //},
-        //onRowUpdating() {
-        //    console.log('RowUpdating');
-        //},
-        //onRowUpdated() {
-        //    console.log('RowUpdated');
-        //},
-        //onRowRemoving() {
-        //    console.log('RowRemoving');
-        //},
-        //onRowRemoved() {
-        //    console.log('RowRemoved');
-        //},
-        //onSaving() {
-        //    console.log('Saving');
-        //},
-        //onSaved() {
-        //    console.log('Saved');
-        //},
-        //onEditCanceling() {
-        //    console.log('EditCanceling');
-        //},
-        //onEditCanceled() {
-        //    console.log('EditCanceled');
-        //},
 
     });
  }
