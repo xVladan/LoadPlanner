@@ -28,6 +28,7 @@ function insertDataIntoTable() {
         insert: function (values) {
            // console.log(values);
             $.ajax({
+                async: false,
                 url: "/Dock/AddDock",
                 type: "POST",
                 data: JSON.stringify({ dockData: values }),
@@ -44,6 +45,7 @@ function insertDataIntoTable() {
                 DockName: values.DockName ? values.DockName : editedDock.DockName,
             }
             $.ajax({
+                async: false,
                 url: "/Dock/EditDock",
                 type: "POST",
                 data: JSON.stringify(editedDock),
@@ -54,6 +56,7 @@ function insertDataIntoTable() {
         },
         remove: function (key) {
             $.ajax({
+                async: false,
                 url: "/Dock/DeleteDock",
                 type: "POST",
                 data: JSON.stringify({ Id: key }),

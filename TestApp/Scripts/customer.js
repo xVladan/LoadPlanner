@@ -27,6 +27,7 @@ function insertDataIntoTable() {
         },
         insert: function (values) {
             $.ajax({
+                async: false,
                 url: "/Customer/AddCustomer",
                 type: "POST",
                 data: JSON.stringify({ customerData: values }),
@@ -49,6 +50,7 @@ function insertDataIntoTable() {
                 isActive: values.isActive ? values.isActive : editedCustomer.isActive,
             }
             $.ajax({
+                async: false,
                 url: "/Customer/EditCustomer",
                 type: "POST",
                 data: JSON.stringify(editedCustomer),
@@ -59,6 +61,7 @@ function insertDataIntoTable() {
         },
         remove: function (key) {
             $.ajax({
+                async: false,
                 url: "/Customer/DeleteCustomer",
                 type: "POST",
                 data: JSON.stringify({ Id: key }),

@@ -30,12 +30,12 @@ function getAllUsers() {
                 isActive: testActive == undefined ? true : values.isActive
             }
             $.ajax({
+                async: false,
                 url: "/Account/SaveUser",
                 type: "POST",
                 data: JSON.stringify({ model: arrToSend }),
                 contentType: 'application/json; charset=utf-8',
             });
-            location.reload();
         },
         update: function (key, values) {
             const users = usersDataSource.items();
@@ -57,6 +57,7 @@ function getAllUsers() {
                 isActive: values.isActive ? values.isActive : editedUser.isActive
             }
             $.ajax({
+                async: false,
                 url: "/UserManagement/EditUser",
                 type: "POST",
                 data: JSON.stringify(editedUser),
@@ -68,6 +69,7 @@ function getAllUsers() {
         },
         remove: function (key) {
             $.ajax({
+                async: false,
                 url: "/UserManagement/DeleteUser",
                 type: "POST",
                 data: JSON.stringify({ Id: key }),

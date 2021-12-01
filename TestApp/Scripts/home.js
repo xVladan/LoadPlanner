@@ -1,11 +1,14 @@
 ﻿$(document).ready(() => {
+    insertDataIntoTabe();
+});
     var statuses = [];
-
     //input Cubic disabled popup
     var result = 0;
 
     //prevent pushing to array same data more than once
     var onFormOpening = 0;
+
+    function insertDataIntoTabe() {
 
     function dockDropData() {
         let d = new $.Deferred();
@@ -132,6 +135,7 @@
 
             };
             $.ajax({
+                async: false,
                 url: "/Home/AddJob",
                 type: "POST",
                 data: JSON.stringify({ jobData: arrtosend }),
@@ -164,6 +168,7 @@
                 Notes: values.Notes == null ? "" : values.Notes
             }
             $.ajax({
+                async: false,
                 url: "/Home/EditJob",
                 type: "POST",
                 data: JSON.stringify(editedJob),
@@ -175,21 +180,23 @@
             });
             return false;
         },
-        remove: function (key) {
+        remove: function deleteFunc(id) {
             $.ajax({
+                async: false,
                 url: "/Home/DeleteJob",
                 type: "POST",
-                data: JSON.stringify({ Id: key }),
+                data: JSON.stringify({ Id: id }),
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
             return false;
+
         }
 
     });
 
 
-    $(() => {
+   
         $('#scheduler').dxScheduler({
             timeZone: 'Europe/Berlin',
             dataSource: jobs,
@@ -207,11 +214,11 @@
             currentDate: new Date(),
             width: 1250,
             height: 770,
-            stateStoring: {
-                enabled: true,
-                type: 'localStorage',
-                storageKey: 'storage',
-            },
+            //stateStoring: {
+            //    enabled: true,
+            //    type: 'localStorage',
+            //    storageKey: 'storage',
+            //},
             resources: [
                 {
                     dataSource: dockDropData(),
@@ -235,9 +242,9 @@
                 },
 
             ],
-            repaintChangesOnly: true,
+            /*repaintChangesOnly: true,*/
             editing: {
-                refreshMode: 'reshape',
+               /* refreshMode: 'reshape',*/
                 mode: 'cell',
                 allowAdding: true,
                 allowUpdating: true,
@@ -516,47 +523,18 @@
                     "<button onclick='deleteFunc(" + model.Id + ");' class='movie-title btn btn-danger d-flex align-items-center'> <i class='bi bi-trash-fill mb-1' ></i>  <span class='ml-1'>Delete</span></buttton>" +//<i class="bi bi-trash-fill"></i>
                     "</div></div>";
             },        
-        }).dxScheduler('instance');
-    });
-});
+        })
+};
 
 function deleteFunc(id) {
-    //$.ajax({
-    //    url: "/Home/DeleteJob",
-    //    type: "POST",
-    //    data: JSON.stringify({ Id: id }),
-    //    dataType: 'json',
-    //    contentType: 'application/json; charset=utf-8',
-    //});
-    //window.location.reload();
-    return sendRequest(`${URL}/Home//DeleteJob`, 'DELETE', {
-        id,
+    $.ajax({
+        async: false,
+        url: "/Home/DeleteJob",
+        type: "POST",
+        data: JSON.stringify({ Id: id }),
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
     });
-}
-
-/////////////////////////////
-
-//remove(key) {
-//    return sendRequest(`${URL}/DeleteOrder`, 'DELETE', {
-//        key,
-//    });
-//},
-/*const URL = 'https:////localhost:44324';*/
-
-
-function sendRequest(url, method = 'POST', data) {
-    const d = $.Deferred();
-
-  //  logRequest(method, url, data);
-
-    $.ajax(url, {
-        method,
-        data,
-        cache: false,
-        xhrFields: { withCredentials: true },
-    }).done((result) => {
-        d.resolve(method === 'GET' ? result.data : result);
-    }).fail((xhr) => {
-        d.reject(xhr.responseJSON ? xhr.responseJSON.Message : xhr.statusText);
-    });
+    return false;
+   
 }

@@ -29,6 +29,7 @@ function insertDataIntoTable() {
         insert: function (values) {
             console.log(values);
             $.ajax({
+                async: false,
                 url: "/Status/AddStatus",
                 type: "POST",
                 data: JSON.stringify({ statusData: values }),
@@ -47,6 +48,7 @@ function insertDataIntoTable() {
                 Color: values.Color ? values.Color : editedStatus.Color
             }
             $.ajax({
+                async: false,
                 url: "/Status/EditStatus",
                 type: "POST",
                 data: JSON.stringify(editedStatus),
@@ -57,6 +59,7 @@ function insertDataIntoTable() {
         },
         remove: function (key) {
             $.ajax({
+                async: false,
                 url: "/Status/DeleteStatus",
                 type: "POST",
                 data: JSON.stringify({ Id: key }),
