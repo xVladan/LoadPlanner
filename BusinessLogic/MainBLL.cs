@@ -444,7 +444,7 @@ namespace BusinessLogic
                     jobId.Width = jobData.Width;
                     jobId.Depth = jobData.Depth;
                     jobId.Cubic = jobData.Cubic;
-                    jobId.Notes = jobData.Notes;
+                    jobId.Notes = jobData.Notes==null ? "No Notes Currently" : jobData.Notes;
                     db.SaveChanges();
                 }
             }
