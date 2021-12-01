@@ -22,11 +22,17 @@ function getAllUsers() {
             });
             return d.promise();
         },
-        insert: function (values) {            
+        insert: function (values) {
+            let testActive = values.isActive;
+
+            let arrToSend = {
+                ...values,
+                isActive: testActive == undefined ? true : values.isActive
+            }
             $.ajax({
                 url: "/Account/SaveUser",
                 type: "POST",
-                data: JSON.stringify({ model: values }),
+                data: JSON.stringify({ model: arrToSend }),
                 contentType: 'application/json; charset=utf-8',
             });
             location.reload();
