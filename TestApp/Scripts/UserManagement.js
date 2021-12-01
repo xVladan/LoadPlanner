@@ -35,7 +35,7 @@ function getAllUsers() {
                 data: JSON.stringify({ model: arrToSend }),
                 contentType: 'application/json; charset=utf-8',
             });
-            /*location.reload();*/
+            location.reload();
         },
         update: function (key, values) {
             const users = usersDataSource.items();
@@ -62,7 +62,7 @@ function getAllUsers() {
                 data: JSON.stringify({ Id: key, editData: editedUser }),
                 contentType: 'application/json; charset=utf-8',
             });
-         //   location.reload();
+           location.reload();
 
         },
         remove: function (key) {
@@ -72,8 +72,7 @@ function getAllUsers() {
                 data: JSON.stringify({ Id: key }),
                 contentType: 'application/json; charset=utf-8',
             });
-            //location.reload();
-          //  $("#usersGrid").dxDataGrid("instance").refresh()
+            location.reload();
         }
     });
     function rolesDropdownData() {
