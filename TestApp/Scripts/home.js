@@ -1,7 +1,4 @@
 ﻿$(document).ready(() => {
-    var allJobs = [];
-    var customers = [];
-    var docks = [];
     var statuses = [];
 
     //input Cubic disabled popup
@@ -201,7 +198,6 @@
             currentView: 'day',
             showAllDayPanel: false,
             groups: ['DockId'],
-            showAllDayPanel: false,
             currentDate: new Date(),
             width: 1250,
             height: 770,
@@ -233,8 +229,9 @@
                 },
 
             ],
+            repaintChangesOnly: true,
             editing: {
-                refreshMode: 'full',
+                refreshMode: 'reshape',
                 mode: 'cell',
                 allowAdding: true,
                 allowUpdating: true,
@@ -525,5 +522,4 @@ function deleteFunc(id) {
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
     });
-    window.location.reload();
 }
