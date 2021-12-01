@@ -13,6 +13,7 @@ function getAllUsers() {
                 contentType: "application/json",
                 data: "{}",
                 success: (data) => {
+                    console.log(data)
                     userPromis.resolve(data);
                 },
                 error: (data) => {
@@ -21,14 +22,20 @@ function getAllUsers() {
             });
             return userPromis.promise();
         },
-        insert: function (values) {            
+        insert: function (values) {
+            let testActive = values.isActive;
+
+            let arrToSend = {
+                ...values,
+                isActive: testActive == undefined ? true : values.isActive
+            }
             $.ajax({
                 url: "/Account/SaveUser",
                 type: "POST",
-                data: JSON.stringify({ model: values }),
+                data: JSON.stringify({ model: arrToSend }),
                 contentType: 'application/json; charset=utf-8',
             });
-            location.reload();
+            /*location.reload();*/
         },
         update: function (key, values) {
             const users = usersDataSource.items();
@@ -55,7 +62,7 @@ function getAllUsers() {
                 data: JSON.stringify({ Id: key, editData: editedUser }),
                 contentType: 'application/json; charset=utf-8',
             });
-            location.reload();
+         //   location.reload();
 
         },
         remove: function (key) {
@@ -65,7 +72,7 @@ function getAllUsers() {
                 data: JSON.stringify({ Id: key }),
                 contentType: 'application/json; charset=utf-8',
             });
-            location.reload();s
+            //location.reload();
           //  $("#usersGrid").dxDataGrid("instance").refresh()
         }
     });
