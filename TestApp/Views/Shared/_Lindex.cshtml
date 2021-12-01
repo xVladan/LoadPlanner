@@ -117,6 +117,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- USERS -->
+          @if (User.IsInRole("admin")) { 
             <li class="nav-item active">
                 <div class="nav-link">
                     <i class="fas fa-fw fa-cog"></i>
@@ -126,6 +127,7 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
+            }
 
             <!-- Customer -->
             <li class="nav-item active">
