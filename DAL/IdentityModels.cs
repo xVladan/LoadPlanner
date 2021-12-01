@@ -24,7 +24,7 @@ namespace DAL
         public string City { get; set; }
         public string Country { get; set; }
         public string Phone { get; set; }
-        public bool isActive { get; set; } 
+        public bool isActive { get; set; }
         //[DataType(DataType.Password)]
       //  public  string Password { get; set; }
      ////   public string RoleName { get; set; }

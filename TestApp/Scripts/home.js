@@ -3,6 +3,7 @@
     var customers = [];
     var docks = [];
     var statuses = [];
+    const URL = 'https:////localhost:44324';
 
     //input Cubic disabled popup
     var result = 0;
@@ -131,7 +132,7 @@
                 Height: values.Height,
                 Width: values.Width,
                 Depth: values.Depth,
-                Notes: values.Notes,
+                Notes: values.Notes == null ? "" : values.Notes
 
             };
             $.ajax({
@@ -140,6 +141,9 @@
                 data: JSON.stringify({ jobData: arrtosend }),
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
+                success: (data) => {
+                    console.log(data);
+                }
             });
            
         },
@@ -147,8 +151,6 @@
             let jobArray = jobs.items();
             let editedJob = jobArray.find(item => item.Id === key)
 
-            let test = values.Notes == null ? "" : values.Notes;
-            console.log(test)
             editedJob = {
                 ...editedJob,
                 LoadNo: values.LoadNo ? values.LoadNo : editedJob.LoadNo,
@@ -171,6 +173,9 @@
                 data: JSON.stringify(editedJob),
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
+                success: (data) => {
+                    console.log(data);
+                }
             });
         },
         remove: function (key) {
@@ -518,12 +523,55 @@
 });
 
 function deleteFunc(id) {
-    $.ajax({
-        url: "/Home/DeleteJob",
-        type: "POST",
-        data: JSON.stringify({ Id: id }),
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
+    //$.ajax({
+    //    url: "/Home/DeleteJob",
+    //    type: "POST",
+    //    data: JSON.stringify({ Id: id }),
+    //    dataType: 'json',
+    //    contentType: 'application/json; charset=utf-8',
+    //});
+    //window.location.reload();
+    return sendRequest(`${URL}/Home//DeleteJob`, 'DELETE', {
+        id,
     });
-    window.location.reload();
+}
+
+
+///////////////////////////////////////////////////
+
+//remove(key) {
+//    return sendRequest(`${URL}/DeleteOrder`, 'DELETE', {
+//        key,
+//    });
+//},
+/*const URL = 'https:////localhost:44324';*/
+
+
+function sendRequest(url, method = 'POST', data) {
+    const d = $.Deferred();
+
+  //  logRequest(method, url, data);
+
+    $.ajax(url, {
+        method,
+        data,
+        cache: false,
+        xhrFields: { withCredentials: true },
+    }).done((result) => {
+        d.resolve(method === 'GET' ? result.data : result);
+    }).fail((xhr) => {
+        d.reject(xhr.responseJSON ? xhr.responseJSON.Message : xhr.statusText);
+    });
+
+    return d.promise();
+}
+
+function logRequest(method, url, data) {
+    const args = Object.keys(data || {}).map((key) => `${key}=${data[key]}`).join(' ');
+
+    const logList = $('#requests ul');
+    const time = DevExpress.localization.formatDate(new Date(), 'HH:mm:ss');
+    const newItem = $('<li>').text([time, method, url.slice(URL.length), args].join(' '));
+
+    logList.prepend(newItem);
 }

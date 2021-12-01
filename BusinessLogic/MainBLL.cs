@@ -412,6 +412,7 @@ namespace BusinessLogic
             {
                 using (db = new ApplicationDbContext())
                 {
+                    jobData.Notes = jobData.Notes == null ? "No Notes Currently" : jobData.Notes;
                     jobData.Cubic = CalculateCubic(jobData.Width, jobData.Height, jobData.Depth);
                     db.Job.Add(jobData);
                     db.SaveChanges();
