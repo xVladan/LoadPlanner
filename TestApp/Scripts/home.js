@@ -536,8 +536,7 @@ function deleteFunc(id) {
     });
 }
 
-
-///////////////////////////////////////////////////
+/////////////////////////////
 
 //remove(key) {
 //    return sendRequest(`${URL}/DeleteOrder`, 'DELETE', {
