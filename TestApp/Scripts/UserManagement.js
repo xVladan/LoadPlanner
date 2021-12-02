@@ -14,6 +14,7 @@ function getAllUsers() {
                 contentType: "application/json",
                 data: "{}",
                 success: (data) => {
+                    console.log(data)
                     d.resolve(data);
                 },
                 error: (data) => {

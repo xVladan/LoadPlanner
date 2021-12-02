@@ -2178,7 +2178,7 @@
 }
 .dx-scheduler-appointment-tooltip {
   text-align: left;
-  width: 250px;
+  width: 310px;
 }
 .dx-scheduler-appointment-tooltip .dx-button-content {
   font-size: 13.33333333px;
@@ -2188,6 +2188,7 @@
 }
 .dx-scheduler-appointment-tooltip-date,
 .dx-scheduler-appointment-tooltip-title {
+    margin-top:10px;
   overflow: hidden;
   -o-text-overflow: ellipsis;
   -ms-text-overflow: ellipsis;
@@ -2196,7 +2197,7 @@
 }
 .dx-scheduler-appointment-tooltip-title {
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 600;
   width: 100%;
 }
 .dx-scheduler-appointment-tooltip-buttons {
@@ -3780,20 +3781,24 @@
 .dx-button-back .dx-button-text {
   display: none;
 }
+.dx-scheduler-appointment-tooltip .dx-scheduler-appointment-tooltip-button .dx-button .dx-button-content {
+    padding: 10px;
+}
 .dx-button {
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  -o-border-radius: 4px;
-  border-radius: 4px;
-  -webkit-box-shadow: 0 1px 3px transparent;
-  -moz-box-shadow: 0 1px 3px transparent;
-  box-shadow: 0 1px 3px transparent;
-  border-width: 1px;
-  border-style: solid;
-  background-color: #fff;
-  border-color: #ddd;
-  color: #333;
+    margin-top: 10px;
+ -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 3px transparent;
+    -moz-box-shadow: 0 1px 3px transparent;
+    box-shadow: 0 1px 3px transparent;
+    border-width: 1px;
+    border-style: solid;
+    background-color: #fff;
+    border-color: #ddd;
+    color: #333;
 }
 .dx-button.dx-state-hover {
   -webkit-box-shadow: 0 1px 3px transparent;

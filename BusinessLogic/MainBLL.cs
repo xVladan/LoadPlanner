@@ -332,28 +332,6 @@ namespace BusinessLogic
             }
         }
 
-        ///Job
-        //public List<Job> GetJobs()
-        //{
-        //    try
-        //    {
-        //        using (db = new ApplicationDbContext())
-        //        {
-        //            var jobs = db.Job
-        //                .Include(x => x.Status)
-        //                .Include(x => x.Customer)
-        //                .Include(x => x.Dock)
-        //                .ToList();
-        //            return jobs;
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        throw;
-        //    }
-        //}
-
         public List<JobDTO> GetJobs()
         {
             try
@@ -380,7 +358,6 @@ namespace BusinessLogic
                             ArrivalTime = job.ArrivalTime.ToString(),
                             startDate = job.startDate.ToString(),
                             endDate = job.endDate.ToString(),
-                            text = job.LoadType + " " + job.LoadNo,
                             statusName = statName.Status,
                             CustomerName = customerName.FirstName + " " + customerName.LastName,
                             DockNum = dockNum.DockName,
