@@ -26,11 +26,17 @@ function insertDataIntoTable() {
             return d.promise();
         },
         insert: function (values) {
+            let testActive = values.isActive;
+
+            let arrToSend = {
+                ...values,
+                isActive: testActive == undefined ? true : values.isActive
+            }
             $.ajax({
                 async: false,
                 url: "/Customer/AddCustomer",
                 type: "POST",
-                data: JSON.stringify({ customerData: values }),
+                data: JSON.stringify({ customerData: arrToSend }),
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
             });
