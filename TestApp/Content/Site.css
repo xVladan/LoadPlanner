@@ -68,7 +68,7 @@ textarea {
 
   /* ///////////////// CUSTOM LOGIN STYLE ///////////////////*/
 
-.login-container {
+/*.login-container {
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -124,6 +124,6 @@ textarea {
 
 .fosi {
     font-size: 1.33rem;
-}
+}*/
 
 /* /////////////// END CUSTOM STYLE //////////////*/

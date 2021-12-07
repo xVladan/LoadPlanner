@@ -8,7 +8,10 @@
  */
 "use strict";
 ! function(e) {
-    function t(i) { if (n[i]) return n[i].exports; var o = n[i] = { exports: {}, id: i, loaded: !1 }; return e[i].call(o.exports, o, o.exports, t), o.loaded = !0, o.exports }
+    function t(i) {
+            if (n[i]) return n[i].exports; var o = n[i] = { exports: {}, id: i, loaded: !1 };
+            return e[i].call(o.exports, o, o.exports, t), o.loaded = !0, o.exports 
+            }
     var n = {};
     return t.m = e, t.c = n, t.p = "", t(0)
 }([function(e, t, n) { e.exports = n(1) }, function(e, t, n) { n(2), n(507), e.exports = n(6) }, function(e, t, n) { n(3), n(337) }, function(e, t, n) {
@@ -37712,7 +37715,10 @@
         f = r.dateToMilliseconds,
         _ = {
             currentViewUpdated: function(e) { this.option("currentView", e) },
-            currentDateUpdated: function(e) { this.option("currentDate", e) },
+            currentDateUpdated: function(e) {
+                localStorage.setItem("dateReload", e);
+                    this.option("currentDate", e)
+                    },
             setCellDataCacheAlias: function(e, t) { this._workSpace.setCellDataCacheAlias(e, t) },
             needCoordinates: function(e) {
                 var t = e.appointmentData,
@@ -37932,6 +37938,7 @@
                 return t
             },
             getAgendaRows: function(e) {
+
                 function t(n) {
                     var i = o(n, e.agendaDuration, e.currentDate);
                     this._dataSourceLoadedCallback.remove(t), a.resolve(i)
@@ -38272,7 +38279,12 @@
                 }
             },
             _updateCurrentView: function(e) {
+            //console.log();
                 var t = e.itemData || e.component.option("selectedItem");
+              //  console.log(t)
+                let onReloadState = t;
+                localStorage.setItem("reload", onReloadState);
+                console.log(localStorage.getItem("reload"));
                 this.notifyObserver("currentViewUpdated", t)
             },
             _renderFocusTarget: o.noop
@@ -38409,7 +38421,14 @@
                 this._popover = this._createComponent("<div>", e, { onContentReady: this._popoverContentReadyHandler.bind(this), defaultOptionsRules: [{ device: function() { return !c.current().generic }, options: { fullScreen: !0, showCloseButton: !1, toolbarItems: [{ shortcut: "cancel" }] } }, { device: function() { return c.current().generic }, options: { target: this._caption.element() } }] }), this._popover.element().appendTo(this.element())
             },
             _popoverContentReadyHandler: function() { this._calendar = this._createComponent(i("<div>"), h, this._calendarOptions()), this._calendar.element().addClass(w), this._popover.content().append(this._calendar.element()) },
-            _calendarOptions: function() { return { min: this.option("min"), max: this.option("max"), firstDayOfWeek: this.option("firstDayOfWeek"), value: this.option("date"), focusStateEnabled: this.option("focusStateEnabled"), onValueChanged: function(e) { this.option("visible") && (this.notifyObserver("currentDateUpdated", e.value), this._popover.hide()) }.bind(this), hasFocus: function() { return !0 }, tabIndex: null, _keyboardProcessor: this._calendarKeyboardProcessor } },
+            _calendarOptions: function() {
+                return { min: this.option("min"), max: this.option("max"), firstDayOfWeek: this.option("firstDayOfWeek"), value: this.option("date"), focusStateEnabled: this.option("focusStateEnabled"),
+                onValueChanged: function(e) {
+                console.log(e.value);
+                let dateForSave = e;
+              // localStorage.setItem("dateRel", e);
+                    this.option("visible") && (this.notifyObserver("currentDateUpdated", e.value), this._popover.hide()) }.bind(this), hasFocus: function() { return !0 }, tabIndex: null, _keyboardProcessor: this._calendarKeyboardProcessor }
+                    },
             _renderCaption: function() {
                 var e = this.option("date"),
                     t = this._getConfig().getCaption.call(this, e);
