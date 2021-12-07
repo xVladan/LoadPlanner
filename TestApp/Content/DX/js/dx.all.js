@@ -14522,6 +14522,7 @@
             },
             _initCurrentDate: function() {
                 var e = this._getNormalizedDate(this._dateOption("value")) || this._getNormalizedDate(this.option("currentDate"));
+                console.log(e);
                 this.option("currentDate", e)
             },
             _getNormalizedDate: function(e) { return e = _.normalizeDate(e, this._getMinDate(), this._getMaxDate()), r.isDefined(e) ? new Date(e) : e },

@@ -1,18 +1,13 @@
 ﻿//adding default state if local storage is empty - date and current iew
-window.addEventListener('load', () => {
-    if (!localStorage.getItem("reload")) {
-        localStorage.setItem("reload", "day");
-    }
-
-    let date = new Date();
+let date = new Date();
     if (!localStorage.getItem("dateReload")) {
         localStorage.setItem("dateReload", date);
     }
 
-});
 $(document).ready(() => {
     insertDataIntoTabe();
 });
+
     var statuses = [];
     //input Cubic disabled popup
     var result = 0;
@@ -218,10 +213,10 @@ $(document).ready(() => {
                 },
                     "timelineDay"
             ],
-                 currentView: localStorage.getItem("reload"),
+                currentView: localStorage.getItem("reload") == null ? "day" : localStorage.getItem("reload"),
                 showAllDayPanel: false,
                 groups: ['DockId'],
-                currentDate: new Date(localStorage.getItem("dateReload")),
+                currentDate: new Date(localStorage.getItem("dateReload")), 
                 width: 1250,
                 height: 770,
                 showBorders: true,
