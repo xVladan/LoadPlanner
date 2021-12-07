@@ -13,12 +13,6 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Courgette&family=PT+Mono&display=swap" rel="stylesheet">*@
     @*prevent go back on logout*@
-    <script type="text/javascript">
-        function preventback() { window.history.forward(); }
-        settimeout("preventback()", 0);
-        window.onunload = function () { null };
-    </script>
-
     <style>
         body {
             padding: 0;
@@ -116,6 +110,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Courgette&family=PT+Mono&display=swap" rel="stylesheet">
+    <script type="text/javascript">
+        //function preventback() { window.history.forward(); }
+        //setTimeout("preventback()", 0);
+        //window.onunload = function () { null };
+    </script>
+
 </head>
 
 
@@ -124,7 +124,7 @@
         <section class="ttile">  <h1 class="title-color">Transport Log</h1></section>
         @*d-flex justify-content-center*@
         <section class="section-form loginform" id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal row form-grab", role = "form", @style = "" }))
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = " form-grab", role = "form", @style = "" }))//form-horizontal row
             {
 
                 @Html.AntiForgeryToken()
@@ -135,17 +135,21 @@
                 <div class="row">
                     <div class="form-group">
                         @*@Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })*@
-                        <div class="col-md-10 error-space">
+                        <div class=" error-space">
+                            @*col-md-10*@
                             @Html.TextBoxFor(m => m.Email, new { placeholder = "Enter your email...", @class = "input-size text-inp" })
-                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" ,@style="margin-left: 18px;"})
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger", @style = "margin-left: 18px;" })
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="form-group mt-4">
+                <div class="">
+                    @*//row*@
+                    <div class="">
+                        @*//form-group mt-4*@
                         @*@Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })*@
-                        <div class="col-md-10 error-space">
+                        <div class="error-space">
+                            @*col-md-10*@
                             @Html.PasswordFor(m => m.Password, new { placeholder = "Enter your password...", @class = " input-size text-inp" })
                             @Html.ValidationMessageFor(m => m.Password, "", new { @class = " text-danger", @style = "margin-left: 18px;" })
                         </div>
@@ -163,13 +167,16 @@
                     </div>
                 </div>*@
 
-                <div class="row">
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10 mt-3">
-                            <input type="submit" value="Log In" class="fosi" />
-                        </div>
-                    </div>
+        <div class="">
+            @*//row*@
+            <div class="">
+                @*//form-group*@
+                <div class="">
+                    @*//col-md-offset-2 col-md-10 mt-3*@
+                    <input type="submit" value="Log In" class="fosi" />
                 </div>
+            </div>
+        </div>
             }
         </section>
     </div>
