@@ -1,4 +1,16 @@
-﻿$(document).ready(() => {
+﻿//adding default state if local storage is empty - date and current iew
+window.addEventListener('load', () => {
+    if (!localStorage.getItem("reload")) {
+        localStorage.setItem("reload", "day");
+    }
+
+    let date = new Date();
+    if (!localStorage.getItem("dateReload")) {
+        localStorage.setItem("dateReload", date);
+    }
+
+});
+$(document).ready(() => {
     insertDataIntoTabe();
 });
     var statuses = [];
@@ -96,7 +108,8 @@
 
 
 
-    var jobs = new DevExpress.data.DataSource({
+        var jobs = new DevExpress.data.DataSource({
+        
         key: 'Id',
         load: function () {
             var d = new $.Deferred();
@@ -108,7 +121,6 @@
                 data: "{}",
                 datatype: "json",
                 success: (data) => {
-                    console.log(data)
                     d.resolve(data)
                 },
                 error: (data) => {
@@ -195,310 +207,307 @@
         }
     });
 
-
-   
         $('#scheduler').dxScheduler({
-            timeZone: 'Europe/Berlin',
-            dataSource: jobs,
-            views: [{
-                type: "day",
-                maxAppointmentPerCell: 1,
-                startDayHour: 0,
-                endDayHour: 24
-            },
-                "timelineDay"
+                timeZone: 'Europe/Berlin',
+                dataSource: jobs,
+                views: [{
+                    type: "day",
+                    maxAppointmentPerCell: 1,
+                    startDayHour: 0,
+                    endDayHour: 24
+                },
+                    "timelineDay"
             ],
-            currentView: 'day',
-            showAllDayPanel: false,
-            groups: ['DockId'],
-            currentDate: new Date(),
-            width: 1250,
-            height: 770,
-            //stateStoring: {
-            //    enabled: true,
-            //    type: 'localStorage',
-            //    storageKey: 'storage',
-            //},
-            resources: [
-                {
-                    dataSource: dockDropData(),
-                    fieldExpr: "DockId",
-                    label: "Dock"
+                 currentView: localStorage.getItem("reload"),
+                showAllDayPanel: false,
+                groups: ['DockId'],
+                currentDate: new Date(localStorage.getItem("dateReload")),
+                width: 1250,
+                height: 770,
+                showBorders: true,
+                resources: [
+                    {
+                        dataSource: dockDropData(),
+                        fieldExpr: "DockId",
+                        label: "Dock"
 
+                    },
+                    {
+                        dataSource: customerDropData(),
+                        fieldExpr: "CustomerId",
+                        label: "Customer"
+                    },
+                    {
+                        dataSource: statusesData(),
+                        fieldExpr: "TransportStatusId",
+                        displayExpr: "Status",
+                        colorExpr: "Color",
+                        valueExpr: "Id",
+                        label: "Status",
+                        useColorAsDefault: true,
+                    },
+
+                ],
+                editing: {
+                    mode: 'cell',
+                    allowAdding: true,
+                    allowUpdating: true,
+                    allowDeleting: true,
+                    allowDragging: true
                 },
-                {
-                    dataSource: customerDropData(),
-                    fieldExpr: "CustomerId",
-                    label: "Customer"
-                },
-                {
-                    dataSource: statusesData(),
-                    fieldExpr: "TransportStatusId",
-                    displayExpr: "Status",
-                    colorExpr: "Color",
-                    valueExpr: "Id",
-                    label: "Status",
-                    useColorAsDefault: true,
-                },
+                onAppointmentFormCreated(data) {
+                    const { form } = data;
+                    let formItems = form.option("items");
 
-            ],
-            editing: {
-                mode: 'cell',
-                allowAdding: true,
-                allowUpdating: true,
-                allowDeleting: true,
-                allowDragging: true
-            },
-            onAppointmentFormCreated(data) {
-                const { form } = data;
-                let formItems = form.option("items");
+                    //array without empty items
+                    let myArr = [];
 
-                //array without empty items
-                let myArr = [];
+                    formItems.map(x => {
+                        if (x.itemType == "empty") {
 
-                formItems.map(x => {
-                    if (x.itemType == "empty") {
+                        } else {
+                            myArr.push(x);
+                        }
+                    });
 
-                    } else {
-                        myArr.push(x);
+                    //filtered myArr - without subject and description input
+                    let filteredArr = [];
+                    myArr.map(c => {
+                        if (c.label.text == "Subject" || c.label.text == "Description" || c.label.text == "Repeat" || c.label.text == "All day") {
+
+                        } else {
+                            filteredArr.push(c);
+                        }
+                    });
+
+                    if (onFormOpening == 0) {
+                        filteredArr.push(
+                            {
+                                label: {
+                                    text: 'Load Type',
+                                },
+                                name: 'LoadType',
+                                editorType: 'dxTextBox',
+                                type: 'required',
+                                validationRules: [{
+                                    type: 'required',
+                                    message: 'Load Type is required',
+                                }],
+                            },
+                            {
+                                label: {
+                                    text: 'Load No',
+                                },
+                                name: 'LoadNo',
+                                editorType: 'dxNumberBox',
+                                validationRules: [{
+                                    type: 'required',
+                                    message: 'Load No is required',
+                                }],
+                            },
+                            {
+                                label: {
+                                    text: 'No Of Pallets',
+                                },
+                                name: 'NoOfPallets',
+                                editorType: 'dxNumberBox',
+                                validationRules: [{
+                                    type: 'required',
+                                    message: 'No Of Palletes is required',
+                                }],
+                            },
+                            {
+                                label: {
+                                    text: 'Height',
+                                },
+                                cssClass: "height-item",
+                                name: 'Height',
+                                editorType: 'dxNumberBox',
+                                validationRules: [{
+                                    type: 'required',
+                                    message: 'Height is required',
+                                }],
+                                editorOptions: {
+
+                                    onValueChanged: function (e) {
+                                        let value = e.value;
+
+                                        //width inp digg
+                                        let width = $('.width-item').children()[1]
+                                        let widthInner1 = $(width).children()[0];
+                                        let widthInner2 = $(widthInner1).children()[1];
+                                        let widthInner3 = $(widthInner2).children()[0];
+
+                                        //width-inp
+                                        let widthInp = $(widthInner3).val();
+
+                                        //depth inp digg
+                                        let depth = $('.depth-item').children()[1]
+                                        let depthInner1 = $(depth).children()[0];
+                                        let depthInner2 = $(depthInner1).children()[1];
+                                        let depthInner3 = $(depthInner2).children()[0];
+
+                                        //depth-inp
+                                        let depthInp = $(depthInner3).val();
+
+
+                                        //cubic inp dig
+                                        let cubRes = $('.cubic-item').children()[1]
+                                        let cubResInner1 = $(cubRes).children()[0];
+                                        let cubResInner2 = $(cubResInner1).children()[1];
+                                        let cubResInner3 = $(cubResInner2).children()[0];
+
+                                        //depth-inp
+                                        let cubResInp = cubResInner3;
+
+
+                                        result = value * widthInp * depthInp;
+                                        cubResInp.placeholder = result;
+
+                                    }
+                                },
+                            },
+                            {
+                                label: {
+                                    text: 'Width',
+                                },
+                                cssClass: "width-item",
+                                name: 'Width',
+                                editorType: 'dxNumberBox',
+                                validationRules: [{
+                                    type: 'required',
+                                    message: 'Width is required',
+                                }],
+                                editorOptions: {
+                                    onValueChanged: function (e) {
+                                        let value = e.value;
+
+                                        //height inp digg
+                                        let height = $('.height-item').children()[1]
+                                        let heightInner1 = $(height).children()[0];
+                                        let heightInner2 = $(heightInner1).children()[1];
+                                        let heightInner3 = $(heightInner2).children()[0];
+
+                                        //height-inp
+                                        let heightInp = $(heightInner3).val();
+
+                                        //depth inp digg
+                                        let depth = $('.depth-item').children()[1]
+                                        let depthInner1 = $(depth).children()[0];
+                                        let depthInner2 = $(depthInner1).children()[1];
+                                        let depthInner3 = $(depthInner2).children()[0];
+
+                                        //depth-inp
+                                        let depthInp = $(depthInner3).val();
+
+
+                                        //cubic inp dig
+                                        let cubRes = $('.cubic-item').children()[1]
+                                        let cubResInner1 = $(cubRes).children()[0];
+                                        let cubResInner2 = $(cubResInner1).children()[1];
+                                        let cubResInner3 = $(cubResInner2).children()[0];
+
+                                        //depth-inp
+                                        let cubResInp = cubResInner3;
+
+
+                                        result = value * heightInp * depthInp;
+                                        cubResInp.placeholder = result;
+
+                                    }
+                                },
+                            },
+                            {
+                                label: {
+                                    text: 'Depth',
+                                },
+                                cssClass: "depth-item",
+                                name: 'Depth',
+                                editorType: 'dxNumberBox',
+                                validationRules: [{
+                                    type: 'required',
+                                    message: 'Depth is required',
+                                }],
+                                editorOptions: {
+                                    onValueChanged: function (e) {
+                                        let value = e.value;
+
+                                        //width inp digg
+                                        let width = $('.width-item').children()[1]
+                                        let widthInner1 = $(width).children()[0];
+                                        let widthInner2 = $(widthInner1).children()[1];
+                                        let widthInner3 = $(widthInner2).children()[0];
+
+                                        //width-inp
+                                        let widthInp = $(widthInner3).val();
+
+                                        //height inp digg
+                                        let height = $('.height-item').children()[1]
+                                        let heightInner1 = $(height).children()[0];
+                                        let heightInner2 = $(heightInner1).children()[1];
+                                        let heightInner3 = $(heightInner2).children()[0];
+
+                                        //height-inp
+                                        let heightInp = $(heightInner3).val();
+
+                                        //cubic inp dig
+                                        let cubRes = $('.cubic-item').children()[1]
+                                        let cubResInner1 = $(cubRes).children()[0];
+                                        let cubResInner2 = $(cubResInner1).children()[1];
+                                        let cubResInner3 = $(cubResInner2).children()[0];
+
+                                        //depth-inp
+                                        let cubResInp = cubResInner3;
+
+                                        result = value * heightInp * widthInp;
+                                        cubResInp.placeholder = result;
+
+
+                                    }
+                                },
+                            },
+                            {
+                                label: {
+                                    text: 'Cubic',
+                                },
+                                cssClass: "cubic-item",
+                                name: 'Cubic',
+                                editorType: 'dxNumberBox',
+                                editorOptions: {
+                                    readOnly: true
+
+                                },
+
+                            },
+                            {
+                                label: {
+                                    text: 'Notes',
+                                },
+                                name: 'Notes',
+                                editorType: 'dxTextArea',
+                            },
+
+                        );
                     }
-                });
 
-                //filtered myArr - without subject and description input
-                let filteredArr = [];
-                myArr.map(c => {
-                    if (c.label.text == "Subject" || c.label.text == "Description" || c.label.text == "Repeat" || c.label.text == "All day") {
+                    form.option({
+                        items: filteredArr,
+                    });
 
-                    } else {
-                        filteredArr.push(c);
-                    }
-                });
+                    onFormOpening = onFormOpening + 1;
 
-                if (onFormOpening == 0) {
-                    filteredArr.push(
-                        {
-                            label: {
-                                text: 'Load Type',
-                            },
-                            name: 'LoadType',
-                            editorType: 'dxTextBox',
-                            type: 'required',
-                            validationRules: [{
-                                type: 'required',
-                                message: 'Load Type is required',
-                            }],
-                        },
-                        {
-                            label: {
-                                text: 'Load No',
-                            },
-                            name: 'LoadNo',
-                            editorType: 'dxNumberBox',
-                            validationRules: [{
-                                type: 'required',
-                                message: 'Load No is required',
-                            }],
-                        },
-                        {
-                            label: {
-                                text: 'No Of Pallets',
-                            },
-                            name: 'NoOfPallets',
-                            editorType: 'dxNumberBox',
-                            validationRules: [{
-                                type: 'required',
-                                message: 'No Of Palletes is required',
-                            }],
-                        },
-                        {
-                            label: {
-                                text: 'Height',
-                            },
-                            cssClass: "height-item",
-                            name: 'Height',
-                            editorType: 'dxNumberBox',
-                            validationRules: [{
-                                type: 'required',
-                                message: 'Height is required',
-                            }],
-                            editorOptions: {
-                                
-                                onValueChanged: function (e) {
-                                    let value = e.value;                            
-
-                                    //width inp digg
-                                    let width = $('.width-item').children()[1]
-                                    let widthInner1 = $(width).children()[0];
-                                    let widthInner2 = $(widthInner1).children()[1];
-                                    let widthInner3 = $(widthInner2).children()[0];
-
-                                    //width-inp
-                                    let widthInp = $(widthInner3).val();
-                 
-                                    //depth inp digg
-                                    let depth = $('.depth-item').children()[1]
-                                    let depthInner1 = $(depth).children()[0];
-                                    let depthInner2 = $(depthInner1).children()[1];
-                                    let depthInner3 = $(depthInner2).children()[0];
-
-                                    //depth-inp
-                                    let depthInp = $(depthInner3).val();
-                              
-
-                                    //cubic inp dig
-                                    let cubRes = $('.cubic-item').children()[1]
-                                    let cubResInner1 = $(cubRes).children()[0];
-                                    let cubResInner2 = $(cubResInner1).children()[1];
-                                    let cubResInner3 = $(cubResInner2).children()[0];
-
-                                    //depth-inp
-                                    let cubResInp = cubResInner3;
+                },
+                appointmentTemplate(model) {
+                    return $(`${"<div class='showtime-preview'>"
+                        + '<div>'}</div>`
+                        + `<div>Status: <br/><strong>${model.statusName}</strong>` + '<br/>'
+                        + `<div>Load No: <br/><strong>${model.LoadNo}</strong><br/>`
+                        + `<div>Customer: <br/><strong>${model.CustomerName}</strong><br/>`
+                        + `<div>Notes: <br/><strong>${model.Notes}</strong><br/>`
+                        + '</div>');
+                },
+            })
 
 
-                                   result = value * widthInp * depthInp;
-                                    cubResInp.placeholder = result;
-                       
-                                }
-                            },
-                        },
-                        {
-                            label: {
-                                text: 'Width',
-                            },
-                            cssClass: "width-item",
-                            name: 'Width',
-                            editorType: 'dxNumberBox',
-                            validationRules: [{
-                                type: 'required',
-                                message: 'Width is required',
-                            }],
-                            editorOptions: {
-                                onValueChanged: function (e) {
-                                    let value = e.value;
-
-                                    //height inp digg
-                                    let height = $('.height-item').children()[1]
-                                    let heightInner1 = $(height).children()[0];
-                                    let heightInner2 = $(heightInner1).children()[1];
-                                    let heightInner3 = $(heightInner2).children()[0];
-
-                                    //height-inp
-                                    let heightInp = $(heightInner3).val();
-
-                                    //depth inp digg
-                                    let depth = $('.depth-item').children()[1]
-                                    let depthInner1 = $(depth).children()[0];
-                                    let depthInner2 = $(depthInner1).children()[1];
-                                    let depthInner3 = $(depthInner2).children()[0];
-
-                                    //depth-inp
-                                    let depthInp = $(depthInner3).val();
-
-
-                                    //cubic inp dig
-                                    let cubRes = $('.cubic-item').children()[1]
-                                    let cubResInner1 = $(cubRes).children()[0];
-                                    let cubResInner2 = $(cubResInner1).children()[1];
-                                    let cubResInner3 = $(cubResInner2).children()[0];
-
-                                    //depth-inp
-                                    let cubResInp = cubResInner3;
-
-
-                                    result = value * heightInp * depthInp;
-                                    cubResInp.placeholder = result;
-
-                                }
-                            },
-                        },
-                        {
-                            label: {
-                                text: 'Depth',
-                            },
-                            cssClass: "depth-item",
-                            name: 'Depth',
-                            editorType: 'dxNumberBox',
-                            validationRules: [{
-                                type: 'required',
-                                message: 'Depth is required',
-                            }],
-                            editorOptions: {
-                                onValueChanged: function (e) {
-                                    let value = e.value;
-
-                                    //width inp digg
-                                    let width = $('.width-item').children()[1]
-                                    let widthInner1 = $(width).children()[0];
-                                    let widthInner2 = $(widthInner1).children()[1];
-                                    let widthInner3 = $(widthInner2).children()[0];
-
-                                    //width-inp
-                                    let widthInp = $(widthInner3).val();
-
-                                    //height inp digg
-                                    let height = $('.height-item').children()[1]
-                                    let heightInner1 = $(height).children()[0];
-                                    let heightInner2 = $(heightInner1).children()[1];
-                                    let heightInner3 = $(heightInner2).children()[0];
-
-                                    //height-inp
-                                    let heightInp = $(heightInner3).val();
-
-                                    //cubic inp dig
-                                    let cubRes = $('.cubic-item').children()[1]
-                                    let cubResInner1 = $(cubRes).children()[0];
-                                    let cubResInner2 = $(cubResInner1).children()[1];
-                                    let cubResInner3 = $(cubResInner2).children()[0];
-
-                                    //depth-inp
-                                    let cubResInp = cubResInner3;
-
-                                    result = value * heightInp * widthInp;
-                                    cubResInp.placeholder = result;
-
-
-                                }
-                            },
-                        },
-                        {
-                            label: {
-                                text: 'Cubic',
-                            },
-                            cssClass: "cubic-item",
-                            name: 'Cubic',
-                            editorType: 'dxNumberBox',
-                            editorOptions: {
-                                readOnly: true
-                               
-                            },
-
-                        },
-                        {
-                            label: {
-                                text: 'Notes',
-                            },
-                            name: 'Notes',
-                            editorType: 'dxTextArea',
-                        },
-
-                    );
-                }
-
-                form.option({
-                    items: filteredArr,
-                });
-
-                onFormOpening = onFormOpening + 1;
-
-            },
-            appointmentTemplate(model) {
-                return $(`${"<div class='showtime-preview'>"
-                    + '<div>'}</div>`
-                    + `<div>Status: <br/><strong>${model.statusName}</strong>` + '<br/>'
-                    + `<div>Load No: <br/><strong>${model.LoadNo}</strong><br/>`
-                    + `<div>Customer: <br/><strong>${model.CustomerName}</strong><br/>`
-                    + `<div>Notes: <br/><strong>${model.Notes}</strong><br/>`
-                    + '</div>');
-            },    
-        })
+      
 };
