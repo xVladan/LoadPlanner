@@ -140,8 +140,8 @@ $(document).ready(() => {
                 Width: values.Width,
                 Depth: values.Depth,
                 Notes: values.Notes == null ? "" : values.Notes
-
             };
+
             $.ajax({
                 async: false,
                 url: "/Home/AddJob",
@@ -150,7 +150,6 @@ $(document).ready(() => {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: (data) => {
-                    console.log(data);
                 }
             });
             return false;
@@ -183,7 +182,6 @@ $(document).ready(() => {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: (data) => {
-                    console.log(data);
                 }
             });
             return false;
@@ -405,7 +403,6 @@ $(document).ready(() => {
                                         //depth-inp
                                         let cubResInp = cubResInner3;
 
-
                                         result = value * heightInp * depthInp;
                                         cubResInp.placeholder = result;
 
@@ -457,7 +454,6 @@ $(document).ready(() => {
                                         result = value * heightInp * widthInp;
                                         cubResInp.placeholder = result;
 
-
                                     }
                                 },
                             },
@@ -470,7 +466,6 @@ $(document).ready(() => {
                                 editorType: 'dxNumberBox',
                                 editorOptions: {
                                     readOnly: true
-
                                 },
 
                             },
@@ -502,7 +497,4 @@ $(document).ready(() => {
                         + '</div>');
                 },
             })
-
-
-      
 };

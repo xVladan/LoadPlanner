@@ -14522,7 +14522,6 @@
             },
             _initCurrentDate: function() {
                 var e = this._getNormalizedDate(this._dateOption("value")) || this._getNormalizedDate(this.option("currentDate"));
-                console.log(e);
                 this.option("currentDate", e)
             },
             _getNormalizedDate: function(e) { return e = _.normalizeDate(e, this._getMinDate(), this._getMaxDate()), r.isDefined(e) ? new Date(e) : e },
@@ -38137,7 +38136,6 @@
         c = n(64),
         d = "dx-scheduler-appointment-tooltip",
         u = "dx-scheduler-appointment-tooltip-title",
-      //  uu = "dx-scheduler-appointment-tooltip-title",
         h = "dx-scheduler-appointment-tooltip-date",
         p = "dx-scheduler-appointment-tooltip-buttons",
         f = {
@@ -38160,7 +38158,7 @@
                 })
             },
             _tooltipContent: function(e, t) {
-            console.log(e)
+            
                 var n = i("<div>").addClass(d),
                     o = this.instance.fire("getField", "allDay", e),
                     a = this.instance.fire("getField", "startDate", t),
@@ -38280,12 +38278,9 @@
                 }
             },
             _updateCurrentView: function(e) {
-            //console.log();
                 var t = e.itemData || e.component.option("selectedItem");
-              //  console.log(t)
                 let onReloadState = t;
                 localStorage.setItem("reload", onReloadState);
-                console.log(localStorage.getItem("reload"));
                 this.notifyObserver("currentViewUpdated", t)
             },
             _renderFocusTarget: o.noop
@@ -38425,10 +38420,8 @@
             _calendarOptions: function() {
                 return { min: this.option("min"), max: this.option("max"), firstDayOfWeek: this.option("firstDayOfWeek"), value: this.option("date"), focusStateEnabled: this.option("focusStateEnabled"),
                 onValueChanged: function(e) {
-                console.log(e.value);
-                let dateForSave = e;
-              // localStorage.setItem("dateRel", e);
-                    this.option("visible") && (this.notifyObserver("currentDateUpdated", e.value), this._popover.hide()) }.bind(this), hasFocus: function() { return !0 }, tabIndex: null, _keyboardProcessor: this._calendarKeyboardProcessor }
+              //localStorage.setItem("dateRel", e);
+                     this.option("visible") && (this.notifyObserver("currentDateUpdated", e.value), this._popover.hide()) }.bind(this), hasFocus: function() { return !0 }, tabIndex: null, _keyboardProcessor: this._calendarKeyboardProcessor }
                     },
             _renderCaption: function() {
                 var e = this.option("date"),
