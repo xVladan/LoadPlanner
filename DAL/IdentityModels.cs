@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using DAL.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-//using Microsoft.JScript;
 
 namespace DAL
 {
@@ -15,26 +14,13 @@ namespace DAL
     public class ApplicationUser : IdentityUser
     {
        
-     //   public override string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        //public override string UserName { get; set; }
-      //  public override string Email { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
         public string Phone { get; set; }
         public bool isActive { get; set; }
-        //[DataType(DataType.Password)]
-      //  public  string Password { get; set; }
-     ////   public string RoleName { get; set; }
-
-        //[ForeignKey("Role")]
-        //public virtual Roles Roles { get; set; }
-
-
-
-
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -59,16 +45,6 @@ namespace DAL
             builder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             builder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             builder.Conventions.Remove<PluralizingTableNameConvention>();
-           // builder.
-            //builder.Entity<TransportStatus>().HasData(new TransportStatus
-            //{
-            //                                Color = "#ffffff",
-            //                                Description = "William",
-            //                                Status = "Shakespeare"
-            //                            }
-            //                        );
-
-            //builder.Entity<TenderStatus>().HasIndex(e => e.Type).IsUnique();
         }
 
         public static ApplicationDbContext Create()

@@ -26,9 +26,8 @@ namespace BusinessLogic.DTO
         public string Notes { get; set; }
 
 
-        ////////////
-        /// Tooltip helper
 
+        /// Tooltip helper
         public string statusName { get; set; }
         public string CustomerName { get; set; }
         public string  color { get; set; }

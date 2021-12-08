@@ -1,5 +1,4 @@
 ﻿$(document).ready(() => {
-
     insertDataIntoTable();
 });
 
@@ -26,7 +25,6 @@ function insertDataIntoTable() {
             return d.promise();
         },
         insert: function (values) {
-           // console.log(values);
             $.ajax({
                 async: false,
                 url: "/Dock/AddDock",

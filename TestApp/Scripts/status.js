@@ -1,7 +1,5 @@
 ﻿$(document).ready(() => {
-
     insertDataIntoTable();
-
 });
 
 var onprepind = 0;
@@ -27,7 +25,6 @@ function insertDataIntoTable() {
             return d.promise();
         },
         insert: function (values) {
-            console.log(values);
             $.ajax({
                 async: false,
                 url: "/Status/AddStatus",
@@ -108,28 +105,11 @@ function insertDataIntoTable() {
                                 dataField: "Status",
                                 colSpan: 2,
                             },
-                            //{
-                            //    dataField: "Color",
-                            //  //  editorType: "dxColorBox",
-                            //    editorType: {
-                            //        type: "dxColorBox",
-                            //        value:"#f05b41",
-                            //    },
-                               
-                            //},
                             {
                                 dataField: "Color",
                                 editorType: "dxColorBox",
                                 editorName: "dxColorBox",
                                 colSpan: 2,
-                                //formItem: {
-                                //    colSpan: 2,
-                                //    editorType: 'ColorBox',
-                                //    editorOptions: {
-                                //        height: 100,
-                                //        value:'#f0acdd'
-                                //    }
-                                //},
                             }
                             ,
                             {
@@ -165,16 +145,7 @@ function insertDataIntoTable() {
                 }]
             },
             {
-                      dataField: "Color",
-                      //formItem: {
-                      //    colSpan: 2,
-                      //    editorType: 'ColorBox',
-                      //    editorOptions: {
-                      //        height: 100,
-                      //        value: '#f0acdd'
-                      //    }
-                      //},
-
+                dataField: "Color",
                 editorType: "dxColorBox",
                 editorName: "dxColorBox",
                 validationRules: [{
@@ -200,14 +171,13 @@ function insertDataIntoTable() {
         onEditorPreparing(e) {
             onprepind = 0;
             if (onprepind < 1) {
-                let a = document.querySelectorAll('.dx-texteditor-input');//dx-datagrid-edit-form-item ''' dx-texteditor-container
+                let a = document.querySelectorAll('.dx-texteditor-input');
 
                 $(a).each(function (el, it) {
                     let tmp = it.id;
                     if (tmp.includes('Color')) {
                         //change type to color box
                         it.type = 'color';
-                        //it.value = '#000000';
                         it.style.width = '150px';
                         it.style.height = '35px';
                         it.style.marginLeft = '400px';
@@ -215,13 +185,11 @@ function insertDataIntoTable() {
 
                         it.addEventListener('change', function () {
                             colorInpWrapp.innerText = it.value;
-                         //   this.value = colorInpWrapp.innerText;
                         });
 
 
                         //////creating inp;
                         let parentColorInpWrapp = $(it).parent();
-
                         let colorInpWrapp = document.createElement('div');
                         colorInpWrapp.style.width = '200px';
                         colorInpWrapp.style.height = '34px';
@@ -229,21 +197,8 @@ function insertDataIntoTable() {
                         colorInpWrapp.style.top = '7px';
                         colorInpWrapp.style.left = '10px';
 
-                    //    colorInpWrapp.innerText = it.value;
-
-
                         //appending to the parent
                         parentColorInpWrapp.append(colorInpWrapp);
-
-                        ////change type to color box
-                        //it.type = 'color';
-                        //it.addEventListener('change', function () {
-                        //    colorInpWrapp.innerHTML = it.value;
-                        //});
-                        //it.style.width = '150px';
-                        //it.style.height = '35px';
-                        //it.style.marginLeft = '412px';
-
                     }
                 })
                 onprepind++;

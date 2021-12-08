@@ -36,7 +36,6 @@ namespace TestApp.Controllers
             }
         }
 
-
         public JsonResult RoleDropdown()
         {
             try
@@ -66,17 +65,15 @@ namespace TestApp.Controllers
             }
         }
 
-        
-        
+               
         [HttpPost]
         public void EditUser(AspNetUsersMeta editData)
         {
             try
             {
-
                 ApplicationUserManager userManager = HttpContext.GetOwinContext().Get<ApplicationUserManager>();
                 var role = mainBLL.EditDbUser(editData);
-                  ApplicationDbContext db = new ApplicationDbContext();
+                ApplicationDbContext db = new ApplicationDbContext();
 
                 IdentityUser user = userManager.FindById(editData.Id);        
                 var old = db.Roles.FirstOrDefault(x => x.Id != role.Id);

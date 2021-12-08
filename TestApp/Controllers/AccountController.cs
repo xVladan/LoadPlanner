@@ -142,7 +142,6 @@ namespace TestApp.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            // return View();
             return RedirectToAction("Login");
         }
 
@@ -159,7 +158,6 @@ namespace TestApp.Controllers
             string jsonMessage;
             var user = new ApplicationUser
             {
-
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 UserName = model.Email,
@@ -167,10 +165,8 @@ namespace TestApp.Controllers
                 Address = model.Address,
                 City = model.City,
                 Country = model.Country,
-                //Password = model.Password,
                 Phone = model.Phone,
                 isActive = model.isActive,
-                // Role = model.Role
             };
             var result = await UserManager.CreateAsync(user, model.Password);
 

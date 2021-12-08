@@ -464,7 +464,6 @@ namespace BusinessLogic
 
                 foreach (var user in dbUsers)
                 {
-                    //  var tempId = user.Roles.FirstOrDefault(x => x.RoleId == x.UserId);
                     var result = new AspNetUsersMeta
                     {
                         Id = user.Id,
@@ -477,20 +476,12 @@ namespace BusinessLogic
                         Phone = user.Phone,
                         isActive = user.isActive,
                          RoleId = user.Roles.FirstOrDefault(role => role.UserId == user.Id).RoleId
-                       //oleId = user.Roles.FirstOrDefault(x => x.UserId == user.Id)
-                        // RoleId = tempId.RoleId
-
-                        //Role = user.Role
                     };
                     users.Add(result);
                 }
-             
                     return users;
             }
-
         }
-
-
 
         public void DeleteUserFromDb(string Id)
         {
@@ -536,21 +527,11 @@ namespace BusinessLogic
                     userById.Email = user.Email;
                     userById.isActive = user.isActive;
                     userById.Country = user.Country;
-             //       userById.Password = user.Password;
                     userById.City = user.City;
-                    //     userById.Role = user.Role;
-                    
-
-                  //db.Entry(user).State = EntityState.Detached;
-
-
+ 
                     db.SaveChanges();
 
-                    //       db.SaveChanges();
-                       return roleById;
-
-                    //  db.Users.FirstOrDefault(x => x.Id == user.Id).Roles.FirstOrDefault(v => v.UserId == user.Id).RoleId = user.RoleId;
-
+                    return roleById;
                 }
             }
             catch (Exception)

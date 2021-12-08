@@ -14,7 +14,6 @@ function getAllUsers() {
                 contentType: "application/json",
                 data: "{}",
                 success: (data) => {
-                    console.log(data)
                     d.resolve(data);
                 },
                 error: (data) => {
@@ -41,7 +40,6 @@ function getAllUsers() {
         update: function (key, values) {
             const users = usersDataSource.items();
             let editedUser = users.find(user => user.Id === key);
-            console.log(editedUser);
             editedUser = {
                ...editedUser,
                 Id: key,
@@ -94,7 +92,6 @@ function getAllUsers() {
                         dataType: 'json',
                         contentType: 'application/json; charset=utf-8',
                         success: (data) => {
-                            console.log(data);
                             d.resolve(data);
                         },
                         error: (data) => {
@@ -132,7 +129,6 @@ function getAllUsers() {
                 title: "User",
                 showTitle: true,
                 width: 500,
-              //  height: 625,
             },
             form: {
                 items: [
@@ -215,16 +211,6 @@ function getAllUsers() {
                     max: 25,
                 }]
             },
-            //{
-            //    dataField: "Id",
-            //    caption: "Number",
-            //    dataType: "text",
-            //    visible: false,
-            //    allowEditing: false,
-            //    formItem: {
-            //        visible: false
-            //    }
-            //},
             {
                 dataField: "Country",
                 caption: "Country",

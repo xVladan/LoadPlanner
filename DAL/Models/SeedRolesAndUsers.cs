@@ -59,10 +59,6 @@ namespace DAL.Models
                 var roleresult = roleManager.Create(new IdentityRole("user"));
             }
 
-            // Add new user(admin) to database
-            
-       //   var k = c.Users.FirstOrDefault(x => x.Email == x.Email).ToString();
-
             string userEmail = "admin@admin.com";
             string userPassword = "Admin!123";
             string firstName = "Jon";
@@ -86,9 +82,6 @@ namespace DAL.Models
                     var result = userManager.AddToRole(user.Id, "admin");
                 }
             }
-
-
-
 
         }
     }

@@ -51,10 +51,6 @@ namespace DAL.Models
         public string Notes { get; set; }
 
 
-
-
-
-
         [ForeignKey("TransportStatusId")]
         public virtual TransportStatus Status { get; set; }
        

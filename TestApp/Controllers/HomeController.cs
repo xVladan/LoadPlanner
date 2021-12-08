@@ -62,6 +62,5 @@ namespace TestApp.Controllers
             mainBLL.DeleteJob(Id);
         }
 
-
-    }
+      }
 }
